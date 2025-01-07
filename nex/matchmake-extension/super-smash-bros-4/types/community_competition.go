@@ -2,9 +2,12 @@
 package types
 
 import (
+	"encoding/hex"
 	"fmt"
 	"strings"
+	"time"
 
+	"github.com/PretendoNetwork/nex-go/v2"
 	"github.com/PretendoNetwork/nex-go/v2/types"
 	matchmaking_types "github.com/PretendoNetwork/nex-protocols-go/v2/match-making/types"
 )
@@ -20,10 +23,10 @@ type CommunityCompetition struct {
 	Param5  *types.PrimitiveU8
 	Param6  *types.PrimitiveU8
 	Param7  *types.PrimitiveU8
-	Param8  *types.DateTime
+	Param8  *types.PrimitiveU64
 	Param9  *types.PrimitiveU32
 	Param10 *types.PrimitiveU32
-	Param11 *types.DateTime
+	Param11 *types.PrimitiveU64
 	Param12 *types.QBuffer
 }
 
@@ -58,120 +61,72 @@ func (ms *CommunityCompetition) WriteTo(writable types.Writable) {
 
 // ExtractFrom extracts the CommunityCompetition from the given readable
 func (ms *CommunityCompetition) ExtractFrom(readable types.Readable) error {
-	/*stream := readable.(*nex.ByteStreamIn)
-	libraryVersion := stream.LibraryVersions.MatchMaking
-
 	var err error
 
-	err = ms.Gathering.ExtractFrom(readable)
+	err = ms.PersistentGathering.ExtractFrom(readable)
 	if err != nil {
-		return fmt.Errorf("Failed to extract CommunityCompetition.Gathering. %s", err.Error())
+		return fmt.Errorf("Failed to extract CommunityCompetition.PersistentGathering. %s", err.Error())
 	}
 
-	err = ms.ExtractHeaderFrom(readable)
+	err = ms.Param1.ExtractFrom(readable)
 	if err != nil {
-		return fmt.Errorf("Failed to extract CommunityCompetition header. %s", err.Error())
+		return fmt.Errorf("Failed to extract CommunityCompetition.Param1. %s", err.Error())
 	}
 
-	err = ms.GameMode.ExtractFrom(readable)
+	err = ms.Param2.ExtractFrom(readable)
 	if err != nil {
-		return fmt.Errorf("Failed to extract CommunityCompetition.GameMode. %s", err.Error())
+		return fmt.Errorf("Failed to extract CommunityCompetition.Param2. %s", err.Error())
 	}
 
-	err = ms.Attributes.ExtractFrom(readable)
+	err = ms.Param3.ExtractFrom(readable)
 	if err != nil {
-		return fmt.Errorf("Failed to extract CommunityCompetition.Attributes. %s", err.Error())
+		return fmt.Errorf("Failed to extract CommunityCompetition.Param3. %s", err.Error())
 	}
 
-	err = ms.OpenParticipation.ExtractFrom(readable)
+	err = ms.Param4.ExtractFrom(readable)
 	if err != nil {
-		return fmt.Errorf("Failed to extract CommunityCompetition.OpenParticipation. %s", err.Error())
+		return fmt.Errorf("Failed to extract CommunityCompetition.Param4. %s", err.Error())
 	}
 
-	err = ms.MatchmakeSystemType.ExtractFrom(readable)
+	err = ms.Param5.ExtractFrom(readable)
 	if err != nil {
-		return fmt.Errorf("Failed to extract CommunityCompetition.MatchmakeSystemType. %s", err.Error())
+		return fmt.Errorf("Failed to extract CommunityCompetition.Param5. %s", err.Error())
 	}
 
-	err = ms.ApplicationBuffer.ExtractFrom(readable)
+	err = ms.Param6.ExtractFrom(readable)
 	if err != nil {
-		return fmt.Errorf("Failed to extract CommunityCompetition.ApplicationBuffer. %s", err.Error())
+		return fmt.Errorf("Failed to extract CommunityCompetition.Param6. %s", err.Error())
 	}
 
-	err = ms.ParticipationCount.ExtractFrom(readable)
+	err = ms.Param7.ExtractFrom(readable)
 	if err != nil {
-		return fmt.Errorf("Failed to extract CommunityCompetition.ParticipationCount. %s", err.Error())
+		return fmt.Errorf("Failed to extract CommunityCompetition.Param7. %s", err.Error())
 	}
 
-	if libraryVersion.GreaterOrEqual("3.4.0") {
-		err = ms.ProgressScore.ExtractFrom(readable)
-		if err != nil {
-			return fmt.Errorf("Failed to extract CommunityCompetition.ProgressScore. %s", err.Error())
-		}
+	err = ms.Param8.ExtractFrom(readable)
+	if err != nil {
+		return fmt.Errorf("Failed to extract CommunityCompetition.Param8. %s", err.Error())
 	}
 
-	if libraryVersion.GreaterOrEqual("3.0.0") {
-		err = ms.SessionKey.ExtractFrom(readable)
-		if err != nil {
-			return fmt.Errorf("Failed to extract CommunityCompetition.SessionKey. %s", err.Error())
-		}
+	err = ms.Param9.ExtractFrom(readable)
+	if err != nil {
+		return fmt.Errorf("Failed to extract CommunityCompetition.Param9. %s", err.Error())
 	}
 
-	if libraryVersion.GreaterOrEqual("3.5.0") {
-		err = ms.Option.ExtractFrom(readable)
-		if err != nil {
-			return fmt.Errorf("Failed to extract CommunityCompetition.Option. %s", err.Error())
-		}
+	err = ms.Param10.ExtractFrom(readable)
+	if err != nil {
+		return fmt.Errorf("Failed to extract CommunityCompetition.Param10. %s", err.Error())
 	}
 
-	if libraryVersion.GreaterOrEqual("3.6.0") {
-		err = ms.MatchmakeParam.ExtractFrom(readable)
-		if err != nil {
-			return fmt.Errorf("Failed to extract CommunityCompetition.MatchmakeParam. %s", err.Error())
-		}
+	err = ms.Param11.ExtractFrom(readable)
+	if err != nil {
+		return fmt.Errorf("Failed to extract CommunityCompetition.Param11. %s", err.Error())
 	}
 
-	if libraryVersion.GreaterOrEqual("3.6.0") {
-		err = ms.StartedTime.ExtractFrom(readable)
-		if err != nil {
-			return fmt.Errorf("Failed to extract CommunityCompetition.StartedTime. %s", err.Error())
-		}
+	err = ms.Param12.ExtractFrom(readable)
+	if err != nil {
+		return fmt.Errorf("Failed to extract CommunityCompetition.Param12. %s", err.Error())
 	}
-
-	if libraryVersion.GreaterOrEqual("3.7.0") {
-		err = ms.UserPassword.ExtractFrom(readable)
-		if err != nil {
-			return fmt.Errorf("Failed to extract CommunityCompetition.UserPassword. %s", err.Error())
-		}
-	}
-
-	if libraryVersion.GreaterOrEqual("3.8.0") {
-		err = ms.ReferGID.ExtractFrom(readable)
-		if err != nil {
-			return fmt.Errorf("Failed to extract CommunityCompetition.ReferGID. %s", err.Error())
-		}
-	}
-
-	if libraryVersion.GreaterOrEqual("3.8.0") {
-		err = ms.UserPasswordEnabled.ExtractFrom(readable)
-		if err != nil {
-			return fmt.Errorf("Failed to extract CommunityCompetition.UserPasswordEnabled. %s", err.Error())
-		}
-	}
-
-	if libraryVersion.GreaterOrEqual("3.8.0") {
-		err = ms.SystemPasswordEnabled.ExtractFrom(readable)
-		if err != nil {
-			return fmt.Errorf("Failed to extract CommunityCompetition.SystemPasswordEnabled. %s", err.Error())
-		}
-	}
-
-	if libraryVersion.GreaterOrEqual("4.0.0") {
-		err = ms.CodeWord.ExtractFrom(readable)
-		if err != nil {
-			return fmt.Errorf("Failed to extract CommunityCompetition.CodeWord. %s", err.Error())
-		}
-	}*/
 
 	return nil
 }
@@ -180,24 +135,19 @@ func (ms *CommunityCompetition) ExtractFrom(readable types.Readable) error {
 func (ms *CommunityCompetition) Copy() types.RVType {
 	copied := NewCommunityCompetition()
 
-	copied.StructureVersion = ms.StructureVersion
 	copied.PersistentGathering = ms.PersistentGathering.Copy().(*matchmaking_types.PersistentGathering)
-	/*copied.GameMode = ms.GameMode.Copy().(*types.PrimitiveU32)
-	copied.Attributes = ms.Attributes.Copy().(*types.List[*types.PrimitiveU32])
-	copied.OpenParticipation = ms.OpenParticipation.Copy().(*types.PrimitiveBool)
-	copied.MatchmakeSystemType = ms.MatchmakeSystemType.Copy().(*types.PrimitiveU32)
-	copied.ApplicationBuffer = ms.ApplicationBuffer.Copy().(*types.Buffer)
-	copied.ParticipationCount = ms.ParticipationCount.Copy().(*types.PrimitiveU32)
-	copied.ProgressScore = ms.ProgressScore.Copy().(*types.PrimitiveU8)
-	copied.SessionKey = ms.SessionKey.Copy().(*types.Buffer)
-	copied.Option = ms.Option.Copy().(*types.PrimitiveU32)
-	copied.MatchmakeParam = ms.MatchmakeParam.Copy().(*MatchmakeParam)
-	copied.StartedTime = ms.StartedTime.Copy().(*types.DateTime)
-	copied.UserPassword = ms.UserPassword.Copy().(*types.String)
-	copied.ReferGID = ms.ReferGID.Copy().(*types.PrimitiveU32)
-	copied.UserPasswordEnabled = ms.UserPasswordEnabled.Copy().(*types.PrimitiveBool)
-	copied.SystemPasswordEnabled = ms.SystemPasswordEnabled.Copy().(*types.PrimitiveBool)
-	copied.CodeWord = ms.CodeWord.Copy().(*types.String)*/
+	copied.Param1 = ms.Param1.Copy().(*types.PrimitiveU32)
+	copied.Param2 = ms.Param2.Copy().(*types.PrimitiveU8)
+	copied.Param3 = ms.Param3.Copy().(*types.PrimitiveU8)
+	copied.Param4 = ms.Param4.Copy().(*types.PrimitiveU16)
+	copied.Param5 = ms.Param5.Copy().(*types.PrimitiveU8)
+	copied.Param6 = ms.Param6.Copy().(*types.PrimitiveU8)
+	copied.Param7 = ms.Param7.Copy().(*types.PrimitiveU8)
+	copied.Param8 = ms.Param8.Copy().(*types.PrimitiveU64)
+	copied.Param9 = ms.Param9.Copy().(*types.PrimitiveU32)
+	copied.Param10 = ms.Param10.Copy().(*types.PrimitiveU32)
+	copied.Param11 = ms.Param11.Copy().(*types.PrimitiveU64)
+	copied.Param12 = ms.Param12.Copy().(*types.QBuffer)
 
 	return copied
 }
@@ -218,68 +168,51 @@ func (ms *CommunityCompetition) Equals(o types.RVType) bool {
 		return false
 	}
 
-	/*if !ms.GameMode.Equals(other.GameMode) {
+	if !ms.Param1.Equals(other.Param1) {
 		return false
 	}
 
-	if !ms.Attributes.Equals(other.Attributes) {
+	if !ms.Param2.Equals(other.Param2) {
 		return false
 	}
 
-	if !ms.OpenParticipation.Equals(other.OpenParticipation) {
+	if !ms.Param3.Equals(other.Param3) {
 		return false
 	}
 
-	if !ms.MatchmakeSystemType.Equals(other.MatchmakeSystemType) {
+	if !ms.Param4.Equals(other.Param4) {
 		return false
 	}
 
-	if !ms.ApplicationBuffer.Equals(other.ApplicationBuffer) {
+	if !ms.Param5.Equals(other.Param5) {
 		return false
 	}
 
-	if !ms.ParticipationCount.Equals(other.ParticipationCount) {
+	if !ms.Param6.Equals(other.Param6) {
 		return false
 	}
 
-	if !ms.ProgressScore.Equals(other.ProgressScore) {
+	if !ms.Param7.Equals(other.Param7) {
 		return false
 	}
 
-	if !ms.SessionKey.Equals(other.SessionKey) {
+	if !ms.Param8.Equals(other.Param8) {
 		return false
 	}
 
-	if !ms.Option.Equals(other.Option) {
+	if !ms.Param9.Equals(other.Param9) {
 		return false
 	}
 
-	if !ms.MatchmakeParam.Equals(other.MatchmakeParam) {
+	if !ms.Param10.Equals(other.Param10) {
 		return false
 	}
 
-	if !ms.StartedTime.Equals(other.StartedTime) {
+	if !ms.Param11.Equals(other.Param11) {
 		return false
 	}
 
-	if !ms.UserPassword.Equals(other.UserPassword) {
-		return false
-	}
-
-	if !ms.ReferGID.Equals(other.ReferGID) {
-		return false
-	}
-
-	if !ms.UserPasswordEnabled.Equals(other.UserPasswordEnabled) {
-		return false
-	}
-
-	if !ms.SystemPasswordEnabled.Equals(other.SystemPasswordEnabled) {
-		return false
-	}
-
-	return ms.CodeWord.Equals(other.CodeWord)*/
-	return true
+	return ms.Param12.Equals(other.Param12)
 }
 
 // String returns the string representation of the CommunityCompetition
@@ -296,22 +229,18 @@ func (ms *CommunityCompetition) FormatToString(indentationLevel int) string {
 
 	b.WriteString("CommunityCompetition{\n")
 	b.WriteString(fmt.Sprintf("%sPersistentGathering (parent): %s,\n", indentationValues, ms.PersistentGathering.FormatToString(indentationLevel+1)))
-	/*b.WriteString(fmt.Sprintf("%sGameMode: %s,\n", indentationValues, ms.GameMode))
-	b.WriteString(fmt.Sprintf("%sAttributes: %s,\n", indentationValues, ms.Attributes))
-	b.WriteString(fmt.Sprintf("%sOpenParticipation: %s,\n", indentationValues, ms.OpenParticipation))
-	b.WriteString(fmt.Sprintf("%sMatchmakeSystemType: %s,\n", indentationValues, ms.MatchmakeSystemType))
-	b.WriteString(fmt.Sprintf("%sApplicationBuffer: %s,\n", indentationValues, ms.ApplicationBuffer))
-	b.WriteString(fmt.Sprintf("%sParticipationCount: %s,\n", indentationValues, ms.ParticipationCount))
-	b.WriteString(fmt.Sprintf("%sProgressScore: %s,\n", indentationValues, ms.ProgressScore))
-	b.WriteString(fmt.Sprintf("%sSessionKey: %s,\n", indentationValues, ms.SessionKey))
-	b.WriteString(fmt.Sprintf("%sOption: %s,\n", indentationValues, ms.Option))
-	b.WriteString(fmt.Sprintf("%sMatchmakeParam: %s,\n", indentationValues, ms.MatchmakeParam.FormatToString(indentationLevel+1)))
-	b.WriteString(fmt.Sprintf("%sStartedTime: %s,\n", indentationValues, ms.StartedTime.FormatToString(indentationLevel+1)))
-	b.WriteString(fmt.Sprintf("%sUserPassword: %s,\n", indentationValues, ms.UserPassword))
-	b.WriteString(fmt.Sprintf("%sReferGID: %s,\n", indentationValues, ms.ReferGID))
-	b.WriteString(fmt.Sprintf("%sUserPasswordEnabled: %s,\n", indentationValues, ms.UserPasswordEnabled))
-	b.WriteString(fmt.Sprintf("%sSystemPasswordEnabled: %s,\n", indentationValues, ms.SystemPasswordEnabled))
-	b.WriteString(fmt.Sprintf("%sCodeWord: %s,\n", indentationValues, ms.CodeWord))*/
+	b.WriteString(fmt.Sprintf("%sParam1: %s,\n", indentationValues, ms.Param1.String()))
+	b.WriteString(fmt.Sprintf("%sParam2: %s,\n", indentationValues, ms.Param2.String()))
+	b.WriteString(fmt.Sprintf("%sParam3: %s,\n", indentationValues, ms.Param3.String()))
+	b.WriteString(fmt.Sprintf("%sParam4: %s,\n", indentationValues, ms.Param4.String()))
+	b.WriteString(fmt.Sprintf("%sParam5: %s,\n", indentationValues, ms.Param5.String()))
+	b.WriteString(fmt.Sprintf("%sParam6: %s,\n", indentationValues, ms.Param6.String()))
+	b.WriteString(fmt.Sprintf("%sParam7: %s,\n", indentationValues, ms.Param7.String()))
+	b.WriteString(fmt.Sprintf("%sParam8: %s,\n", indentationValues, ms.Param8.String()))
+	b.WriteString(fmt.Sprintf("%sParam9: %s,\n", indentationValues, ms.Param9.String()))
+	b.WriteString(fmt.Sprintf("%sParam10: %s,\n", indentationValues, ms.Param10.String()))
+	b.WriteString(fmt.Sprintf("%sParam11: %s,\n", indentationValues, ms.Param11.String()))
+	b.WriteString(fmt.Sprintf("%sParam12: %s,\n", indentationValues, ms.Param12.String()))
 	b.WriteString(fmt.Sprintf("%s}", indentationEnd))
 
 	return b.String()
@@ -328,12 +257,48 @@ func NewCommunityCompetition() *CommunityCompetition {
 		Param5:              types.NewPrimitiveU8(0),
 		Param6:              types.NewPrimitiveU8(0),
 		Param7:              types.NewPrimitiveU8(0),
-		Param8:              types.NewDateTime(0),
+		Param8:              types.NewPrimitiveU64(0),
 		Param9:              types.NewPrimitiveU32(0),
 		Param10:             types.NewPrimitiveU32(0),
-		Param11:             types.NewDateTime(0),
+		Param11:             types.NewPrimitiveU64(0),
 		Param12:             types.NewQBuffer(nil),
 	}
 
 	return ms
+}
+
+func (ms *CommunityCompetition) SetDebugFields(packet nex.PacketInterface) {
+	ms.Gathering.ID = types.NewPrimitiveU32(0xFFFFFFFF)
+	ms.Gathering.OwnerPID = packet.Sender().PID()
+	ms.Gathering.HostPID = packet.Sender().PID()
+	ms.Gathering.MinimumParticipants = types.NewPrimitiveU16(2)
+	ms.Gathering.MaximumParticipants = types.NewPrimitiveU16(30)
+	ms.Gathering.ParticipationPolicy = types.NewPrimitiveU32(95)
+	ms.Gathering.PolicyArgument = types.NewPrimitiveU32(0)
+	ms.Gathering.Flags = types.NewPrimitiveU32(641)
+	ms.Gathering.State = types.NewPrimitiveU32(0)
+	ms.Gathering.Description = types.NewString("test5")
+
+	s := "0033D01000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+
+	data, _ := hex.DecodeString(s)
+
+	ms.PersistentGathering.ApplicationBuffer = types.NewBuffer(data)
+	// ApplicationBuffer dumped from a request:
+	// 0033d01000010000ff01000a02000000ffffffffffffffffffffffffbfbffbfe00ffab7f0000000000000000bfbffbfe00ffab7f
+	// 000000000000000000000000010607000a000000000000000000000000000000000000007e914214000060010102010000000000
+	ms.PersistentGathering.ParticipationStartDate = types.NewDateTime(0).FromTimestamp(time.Now().UTC().Add(-1 * time.Hour))
+	ms.PersistentGathering.ParticipationEndDate = types.NewDateTime(0).FromTimestamp(time.Now().UTC().Add(10 * time.Hour))
+	ms.Param1 = types.NewPrimitiveU32(9472)
+	ms.Param2 = types.NewPrimitiveU8(0)
+	ms.Param3 = types.NewPrimitiveU8(0)
+	ms.Param4 = types.NewPrimitiveU16(0)
+	ms.Param5 = types.NewPrimitiveU8(0)
+	ms.Param6 = types.NewPrimitiveU8(0)
+	ms.Param7 = types.NewPrimitiveU8(0)
+	ms.Param8 = types.NewPrimitiveU64(5802043704348846040)
+	ms.Param9 = types.NewPrimitiveU32(8100)
+	ms.Param10 = types.NewPrimitiveU32(0)
+	ms.Param11 = types.NewPrimitiveU64(0)
+	ms.Param12 = types.NewQBuffer(nil)
 }

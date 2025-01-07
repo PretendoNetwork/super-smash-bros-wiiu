@@ -24,7 +24,7 @@ func init() {
 
 	var err error
 
-	err = godotenv.Load("../super-smash-bros-wiiu.env")
+	err = godotenv.Load()
 	if err != nil {
 		globals.Logger.Warning("Error loading .env file")
 	}
@@ -36,10 +36,10 @@ func init() {
 	accountGRPCHost := os.Getenv("PN_SSBWIIU_ACCOUNT_GRPC_HOST")
 	accountGRPCPort := os.Getenv("PN_SSBWIIU_ACCOUNT_GRPC_PORT")
 	accountGRPCAPIKey := os.Getenv("PN_SSBWIIU_ACCOUNT_GRPC_API_KEY")
-	globals.S3Bucket = os.Getenv("PN_SSBWIIU_DATASTORE_S3BUCKET")
-	globals.S3Key = os.Getenv("PN_SSBWIIU_DATASTORE_S3KEY")
-	globals.S3Secret = os.Getenv("PN_SSBWIIU_DATASTORE_S3SECRET")
-	globals.S3Url = os.Getenv("PN_SSBWIIU_DATASTORE_S3URL")
+	//globals.S3Bucket = os.Getenv("PN_SSBWIIU_DATASTORE_S3BUCKET")
+	//globals.S3Key = os.Getenv("PN_SSBWIIU_DATASTORE_S3KEY")
+	//globals.S3Secret = os.Getenv("PN_SSBWIIU_DATASTORE_S3SECRET")
+	//globals.S3Url = os.Getenv("PN_SSBWIIU_DATASTORE_S3URL")
 
 	if strings.TrimSpace(kerberosPassword) == "" {
 		globals.Logger.Warningf("PN_SSBWIIU_KERBEROS_PASSWORD environment variable not set. Using default password: %q", globals.KerberosPassword)
@@ -103,25 +103,25 @@ func init() {
 		globals.Logger.Warning("Insecure gRPC server detected. PN_SSBWIIU_ACCOUNT_GRPC_API_KEY environment variable not set")
 	}
 
-	if strings.TrimSpace(globals.S3Bucket) == "" {
-		globals.Logger.Error("PN_SSBWIIU_DATASTORE_S3BUCKET environment variable not set")
-		os.Exit(0)
-	}
+	// if strings.TrimSpace(globals.S3Bucket) == "" {
+	// 	globals.Logger.Error("PN_SSBWIIU_DATASTORE_S3BUCKET environment variable not set")
+	// 	os.Exit(0)
+	// }
 
-	if strings.TrimSpace(globals.S3Key) == "" {
-		globals.Logger.Error("PN_SSBWIIU_DATASTORE_S3KEY environment variable not set")
-		os.Exit(0)
-	}
+	// if strings.TrimSpace(globals.S3Key) == "" {
+	// 	globals.Logger.Error("PN_SSBWIIU_DATASTORE_S3KEY environment variable not set")
+	// 	os.Exit(0)
+	// }
 
-	if strings.TrimSpace(globals.S3Secret) == "" {
-		globals.Logger.Error("PN_SSBWIIU_DATASTORE_S3SECRET environment variable not set")
-		os.Exit(0)
-	}
+	// if strings.TrimSpace(globals.S3Secret) == "" {
+	// 	globals.Logger.Error("PN_SSBWIIU_DATASTORE_S3SECRET environment variable not set")
+	// 	os.Exit(0)
+	// }
 
-	if strings.TrimSpace(globals.S3Url) == "" {
-		globals.Logger.Error("PN_SSBWIIU_DATASTORE_S3URL environment variable not set")
-		os.Exit(0)
-	}
+	// if strings.TrimSpace(globals.S3Url) == "" {
+	// 	globals.Logger.Error("PN_SSBWIIU_DATASTORE_S3URL environment variable not set")
+	// 	os.Exit(0)
+	// }
 
 	globals.GRPCAccountClientConnection, err = grpc.NewClient(fmt.Sprintf("%s:%s", accountGRPCHost, accountGRPCPort), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {

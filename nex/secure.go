@@ -25,11 +25,11 @@ func StartSecureServer() {
 	globals.SecureServer.AccessKey = "2869ba38"
 
 	globals.SecureEndpoint.OnConnectionEnded(func(connection *nex.PRUDPConnection) {
-		fmt.Printf("Kicked dumbass: %d", connection.PID().LegacyValue())
+		fmt.Printf("Kicked: %d\n", connection.PID().LegacyValue())
 	})
 
 	globals.SecureEndpoint.OnDisconnect(func(packet nex.PacketInterface) {
-		fmt.Printf("Dumbass left: %d", packet.Sender().PID().LegacyValue())
+		fmt.Printf("Left: %d\n", packet.Sender().PID().LegacyValue())
 	})
 
 	globals.SecureEndpoint.OnData(func(packet nex.PacketInterface) {

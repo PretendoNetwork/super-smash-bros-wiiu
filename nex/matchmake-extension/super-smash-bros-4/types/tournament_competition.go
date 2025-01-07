@@ -11,46 +11,46 @@ import (
 // TournamentCompetition is a type within the MatchmakeExtensionSuperSmashBros.4 protocol
 type TournamentCompetition struct {
 	types.Structure
-	Param1  *types.PrimitiveU32
-	Param2  *types.PrimitiveU8
-	Param3  *types.PrimitiveU8
-	Param4  *types.String
-	Param5  *types.PrimitiveU8
-	Param6  *types.DateTime
-	Param7  *types.DateTime
-	Param8  *types.PrimitiveU32
-	Param9  *types.PrimitiveU32
-	Param10 *types.PrimitiveU8
-	Param11 *types.PrimitiveU8
-	Param12 *types.PrimitiveU16
-	Param13 *types.PrimitiveU16
-	Param14 *types.PrimitiveU8
-	Param15 *types.PrimitiveU8
-	Param16 *types.PrimitiveU16
-	Param17 *types.PrimitiveU8
+	TournamentId    *types.PrimitiveU32
+	Param2          *types.PrimitiveU8
+	Param3          *types.PrimitiveU8
+	TournamentName  *types.String
+	Param5          *types.PrimitiveU8
+	StartTime       *types.DateTime
+	EndTime         *types.DateTime
+	ClosingTime     *types.PrimitiveU32 // closing time in seconds
+	Param9          *types.PrimitiveU32
+	Param10         *types.PrimitiveU8
+	Param11         *types.PrimitiveU8
+	MaxParticipants *types.PrimitiveU16
+	Param13         *types.PrimitiveU16
+	Param14         *types.PrimitiveU8
+	Param15         *types.PrimitiveU8
+	RoundTime       *types.PrimitiveU16 // round time in seconds
+	StockCount      *types.PrimitiveU8
 }
 
 // WriteTo writes the TournamentCompetition to the given writable
 func (dsppp *TournamentCompetition) WriteTo(writable types.Writable) {
 	contentWritable := writable.CopyNew()
 
-	dsppp.Param1.WriteTo(contentWritable)
+	dsppp.TournamentId.WriteTo(contentWritable)
 	dsppp.Param2.WriteTo(contentWritable)
 	dsppp.Param3.WriteTo(contentWritable)
-	dsppp.Param4.WriteTo(contentWritable)
+	dsppp.TournamentName.WriteTo(contentWritable)
 	dsppp.Param5.WriteTo(contentWritable)
-	dsppp.Param6.WriteTo(contentWritable)
-	dsppp.Param7.WriteTo(contentWritable)
-	dsppp.Param8.WriteTo(contentWritable)
+	dsppp.StartTime.WriteTo(contentWritable)
+	dsppp.EndTime.WriteTo(contentWritable)
+	dsppp.ClosingTime.WriteTo(contentWritable)
 	dsppp.Param9.WriteTo(contentWritable)
 	dsppp.Param10.WriteTo(contentWritable)
 	dsppp.Param11.WriteTo(contentWritable)
-	dsppp.Param12.WriteTo(contentWritable)
+	dsppp.MaxParticipants.WriteTo(contentWritable)
 	dsppp.Param13.WriteTo(contentWritable)
 	dsppp.Param14.WriteTo(contentWritable)
 	dsppp.Param15.WriteTo(contentWritable)
-	dsppp.Param16.WriteTo(contentWritable)
-	dsppp.Param17.WriteTo(contentWritable)
+	dsppp.RoundTime.WriteTo(contentWritable)
+	dsppp.StockCount.WriteTo(contentWritable)
 
 	content := contentWritable.Bytes()
 
@@ -123,23 +123,23 @@ func (dsppp *TournamentCompetition) FormatToString(indentationLevel int) string 
 // NewTournamentCompetition returns a new TournamentCompetition
 func NewTournamentCompetition() *TournamentCompetition {
 	dsppp := &TournamentCompetition{
-		Param1:  types.NewPrimitiveU32(0),
-		Param2:  types.NewPrimitiveU8(0),
-		Param3:  types.NewPrimitiveU8(0),
-		Param4:  types.NewString(""),
-		Param5:  types.NewPrimitiveU8(0),
-		Param6:  types.NewDateTime(0).Now(),
-		Param7:  types.NewDateTime(0).Now(),
-		Param8:  types.NewPrimitiveU32(0),
-		Param9:  types.NewPrimitiveU32(0),
-		Param10: types.NewPrimitiveU8(0),
-		Param11: types.NewPrimitiveU8(0),
-		Param12: types.NewPrimitiveU16(0),
-		Param13: types.NewPrimitiveU16(0),
-		Param14: types.NewPrimitiveU8(0),
-		Param15: types.NewPrimitiveU8(0),
-		Param16: types.NewPrimitiveU16(0),
-		Param17: types.NewPrimitiveU8(0),
+		TournamentId:    types.NewPrimitiveU32(0),
+		Param2:          types.NewPrimitiveU8(0),
+		Param3:          types.NewPrimitiveU8(0),
+		TournamentName:  types.NewString(""),
+		Param5:          types.NewPrimitiveU8(0),
+		StartTime:       types.NewDateTime(0).Now(),
+		EndTime:         types.NewDateTime(0).Now(),
+		ClosingTime:     types.NewPrimitiveU32(0),
+		Param9:          types.NewPrimitiveU32(0),
+		Param10:         types.NewPrimitiveU8(0),
+		Param11:         types.NewPrimitiveU8(0),
+		MaxParticipants: types.NewPrimitiveU16(0),
+		Param13:         types.NewPrimitiveU16(0),
+		Param14:         types.NewPrimitiveU8(0),
+		Param15:         types.NewPrimitiveU8(0),
+		RoundTime:       types.NewPrimitiveU16(0),
+		StockCount:      types.NewPrimitiveU8(0),
 	}
 
 	return dsppp
