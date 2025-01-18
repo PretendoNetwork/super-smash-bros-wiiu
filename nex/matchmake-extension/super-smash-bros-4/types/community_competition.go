@@ -23,18 +23,15 @@ type CommunityCompetition struct {
 	Param5  *types.PrimitiveU8
 	Param6  *types.PrimitiveU8
 	Param7  *types.PrimitiveU8
-	Param8  *types.PrimitiveU64
+	Param8  *types.DateTime
 	Param9  *types.PrimitiveU32
 	Param10 *types.PrimitiveU32
-	Param11 *types.PrimitiveU64
+	Param11 *types.DateTime
 	Param12 *types.QBuffer
 }
 
 // WriteTo writes the CommunityCompetition to the given writable
 func (ms *CommunityCompetition) WriteTo(writable types.Writable) {
-	//stream := writable.(*nex.ByteStreamOut)
-	//libraryVersion := stream.LibraryVersions.MatchMaking
-
 	ms.PersistentGathering.WriteTo(writable)
 
 	contentWritable := writable.CopyNew()
@@ -66,6 +63,11 @@ func (ms *CommunityCompetition) ExtractFrom(readable types.Readable) error {
 	err = ms.PersistentGathering.ExtractFrom(readable)
 	if err != nil {
 		return fmt.Errorf("Failed to extract CommunityCompetition.PersistentGathering. %s", err.Error())
+	}
+
+	err = ms.ExtractHeaderFrom(readable)
+	if err != nil {
+		return fmt.Errorf("Failed to extract CommunityCompetition header. %s", err.Error())
 	}
 
 	err = ms.Param1.ExtractFrom(readable)
@@ -135,6 +137,7 @@ func (ms *CommunityCompetition) ExtractFrom(readable types.Readable) error {
 func (ms *CommunityCompetition) Copy() types.RVType {
 	copied := NewCommunityCompetition()
 
+	copied.StructureVersion = ms.StructureVersion
 	copied.PersistentGathering = ms.PersistentGathering.Copy().(*matchmaking_types.PersistentGathering)
 	copied.Param1 = ms.Param1.Copy().(*types.PrimitiveU32)
 	copied.Param2 = ms.Param2.Copy().(*types.PrimitiveU8)
@@ -143,10 +146,10 @@ func (ms *CommunityCompetition) Copy() types.RVType {
 	copied.Param5 = ms.Param5.Copy().(*types.PrimitiveU8)
 	copied.Param6 = ms.Param6.Copy().(*types.PrimitiveU8)
 	copied.Param7 = ms.Param7.Copy().(*types.PrimitiveU8)
-	copied.Param8 = ms.Param8.Copy().(*types.PrimitiveU64)
+	copied.Param8 = ms.Param8.Copy().(*types.DateTime)
 	copied.Param9 = ms.Param9.Copy().(*types.PrimitiveU32)
 	copied.Param10 = ms.Param10.Copy().(*types.PrimitiveU32)
-	copied.Param11 = ms.Param11.Copy().(*types.PrimitiveU64)
+	copied.Param11 = ms.Param11.Copy().(*types.DateTime)
 	copied.Param12 = ms.Param12.Copy().(*types.QBuffer)
 
 	return copied
@@ -257,10 +260,10 @@ func NewCommunityCompetition() *CommunityCompetition {
 		Param5:              types.NewPrimitiveU8(0),
 		Param6:              types.NewPrimitiveU8(0),
 		Param7:              types.NewPrimitiveU8(0),
-		Param8:              types.NewPrimitiveU64(0),
+		Param8:              types.NewDateTime(0),
 		Param9:              types.NewPrimitiveU32(0),
 		Param10:             types.NewPrimitiveU32(0),
-		Param11:             types.NewPrimitiveU64(0),
+		Param11:             types.NewDateTime(0),
 		Param12:             types.NewQBuffer(nil),
 	}
 
@@ -289,16 +292,16 @@ func (ms *CommunityCompetition) SetDebugFields(packet nex.PacketInterface) {
 	// 000000000000000000000000010607000a000000000000000000000000000000000000007e914214000060010102010000000000
 	ms.PersistentGathering.ParticipationStartDate = types.NewDateTime(0).FromTimestamp(time.Now().UTC().Add(-1 * time.Hour))
 	ms.PersistentGathering.ParticipationEndDate = types.NewDateTime(0).FromTimestamp(time.Now().UTC().Add(10 * time.Hour))
-	ms.Param1 = types.NewPrimitiveU32(9472)
+	ms.Param1 = types.NewPrimitiveU32(0)
 	ms.Param2 = types.NewPrimitiveU8(0)
 	ms.Param3 = types.NewPrimitiveU8(0)
-	ms.Param4 = types.NewPrimitiveU16(0)
-	ms.Param5 = types.NewPrimitiveU8(0)
-	ms.Param6 = types.NewPrimitiveU8(0)
-	ms.Param7 = types.NewPrimitiveU8(0)
-	ms.Param8 = types.NewPrimitiveU64(5802043704348846040)
-	ms.Param9 = types.NewPrimitiveU32(8100)
+	ms.Param4 = types.NewPrimitiveU16(10200)
+	ms.Param5 = types.NewPrimitiveU8(1)
+	ms.Param6 = types.NewPrimitiveU8(49)
+	ms.Param7 = types.NewPrimitiveU8(2)
+	ms.Param8 = types.NewDateTime(135900726528)
+	ms.Param9 = types.NewPrimitiveU32(0)
 	ms.Param10 = types.NewPrimitiveU32(0)
-	ms.Param11 = types.NewPrimitiveU64(0)
+	ms.Param11 = types.NewDateTime(0)
 	ms.Param12 = types.NewQBuffer(nil)
 }

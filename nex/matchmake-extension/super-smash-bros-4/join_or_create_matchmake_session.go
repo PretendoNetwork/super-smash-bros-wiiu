@@ -23,6 +23,7 @@ func JoinOrCreateMatchmakeSession(err error, packet nex.PacketInterface, callID 
 
 	fmt.Println(hex.EncodeToString(packet.RMCMessage().Parameters))
 
+	// boilerplate (needs to go in protocols common)
 	endpoint := packet.Sender().Endpoint()
 	parametersStream := nex.NewByteStreamIn(packet.RMCMessage().Parameters, endpoint.LibraryVersions(), endpoint.ByteStreamSettings())
 
@@ -38,9 +39,8 @@ func JoinOrCreateMatchmakeSession(err error, packet nex.PacketInterface, callID 
 	message := nex_types.NewString("")
 	message.ExtractFrom(parametersStream)
 
+	// not boilerplate
 	fmt.Println(anyGathering.FormatToString(0))
-
-	anyGathering.WriteTo(rmcResponseStream)
 
 	rmcResponse := nex.NewRMCSuccess(globals.SecureEndpoint, rmcResponseStream.Bytes())
 	rmcResponse.ProtocolID = matchmake_extension_super_smash_bros_4.ProtocolID
