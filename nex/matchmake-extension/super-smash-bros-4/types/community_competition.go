@@ -16,18 +16,18 @@ import (
 type CommunityCompetition struct {
 	types.Structure
 	*matchmaking_types.PersistentGathering
-	Param1  *types.PrimitiveU32
-	Param2  *types.PrimitiveU8
-	Param3  *types.PrimitiveU8
-	Param4  *types.PrimitiveU16
-	Param5  *types.PrimitiveU8
-	Param6  *types.PrimitiveU8
-	Param7  *types.PrimitiveU8
-	Param8  *types.DateTime
-	Param9  *types.PrimitiveU32
-	Param10 *types.PrimitiveU32
-	Param11 *types.DateTime
-	Param12 *types.QBuffer
+	Param1     *types.PrimitiveU32
+	Param2     *types.PrimitiveU8
+	Param3     *types.PrimitiveU8
+	Param4     *types.PrimitiveU16
+	LanguageId *types.PrimitiveU8
+	CountryId  *types.PrimitiveU8
+	RegionId   *types.PrimitiveU8
+	Param8     *types.DateTime
+	Param9     *types.PrimitiveU32
+	Param10    *types.PrimitiveU32
+	Param11    *types.DateTime
+	Param12    *types.QBuffer
 }
 
 // WriteTo writes the CommunityCompetition to the given writable
@@ -40,9 +40,9 @@ func (ms *CommunityCompetition) WriteTo(writable types.Writable) {
 	ms.Param2.WriteTo(contentWritable)
 	ms.Param3.WriteTo(contentWritable)
 	ms.Param4.WriteTo(contentWritable)
-	ms.Param5.WriteTo(contentWritable)
-	ms.Param6.WriteTo(contentWritable)
-	ms.Param7.WriteTo(contentWritable)
+	ms.LanguageId.WriteTo(contentWritable)
+	ms.CountryId.WriteTo(contentWritable)
+	ms.RegionId.WriteTo(contentWritable)
 	ms.Param8.WriteTo(contentWritable)
 	ms.Param9.WriteTo(contentWritable)
 	ms.Param10.WriteTo(contentWritable)
@@ -90,19 +90,19 @@ func (ms *CommunityCompetition) ExtractFrom(readable types.Readable) error {
 		return fmt.Errorf("Failed to extract CommunityCompetition.Param4. %s", err.Error())
 	}
 
-	err = ms.Param5.ExtractFrom(readable)
+	err = ms.LanguageId.ExtractFrom(readable)
 	if err != nil {
-		return fmt.Errorf("Failed to extract CommunityCompetition.Param5. %s", err.Error())
+		return fmt.Errorf("Failed to extract CommunityCompetition.LanguageId. %s", err.Error())
 	}
 
-	err = ms.Param6.ExtractFrom(readable)
+	err = ms.CountryId.ExtractFrom(readable)
 	if err != nil {
-		return fmt.Errorf("Failed to extract CommunityCompetition.Param6. %s", err.Error())
+		return fmt.Errorf("Failed to extract CommunityCompetition.CountryId. %s", err.Error())
 	}
 
-	err = ms.Param7.ExtractFrom(readable)
+	err = ms.RegionId.ExtractFrom(readable)
 	if err != nil {
-		return fmt.Errorf("Failed to extract CommunityCompetition.Param7. %s", err.Error())
+		return fmt.Errorf("Failed to extract CommunityCompetition.RegionId. %s", err.Error())
 	}
 
 	err = ms.Param8.ExtractFrom(readable)
@@ -143,9 +143,9 @@ func (ms *CommunityCompetition) Copy() types.RVType {
 	copied.Param2 = ms.Param2.Copy().(*types.PrimitiveU8)
 	copied.Param3 = ms.Param3.Copy().(*types.PrimitiveU8)
 	copied.Param4 = ms.Param4.Copy().(*types.PrimitiveU16)
-	copied.Param5 = ms.Param5.Copy().(*types.PrimitiveU8)
-	copied.Param6 = ms.Param6.Copy().(*types.PrimitiveU8)
-	copied.Param7 = ms.Param7.Copy().(*types.PrimitiveU8)
+	copied.LanguageId = ms.LanguageId.Copy().(*types.PrimitiveU8)
+	copied.CountryId = ms.CountryId.Copy().(*types.PrimitiveU8)
+	copied.RegionId = ms.RegionId.Copy().(*types.PrimitiveU8)
 	copied.Param8 = ms.Param8.Copy().(*types.DateTime)
 	copied.Param9 = ms.Param9.Copy().(*types.PrimitiveU32)
 	copied.Param10 = ms.Param10.Copy().(*types.PrimitiveU32)
@@ -187,15 +187,15 @@ func (ms *CommunityCompetition) Equals(o types.RVType) bool {
 		return false
 	}
 
-	if !ms.Param5.Equals(other.Param5) {
+	if !ms.LanguageId.Equals(other.LanguageId) {
 		return false
 	}
 
-	if !ms.Param6.Equals(other.Param6) {
+	if !ms.CountryId.Equals(other.CountryId) {
 		return false
 	}
 
-	if !ms.Param7.Equals(other.Param7) {
+	if !ms.RegionId.Equals(other.RegionId) {
 		return false
 	}
 
@@ -236,9 +236,9 @@ func (ms *CommunityCompetition) FormatToString(indentationLevel int) string {
 	b.WriteString(fmt.Sprintf("%sParam2: %s,\n", indentationValues, ms.Param2.String()))
 	b.WriteString(fmt.Sprintf("%sParam3: %s,\n", indentationValues, ms.Param3.String()))
 	b.WriteString(fmt.Sprintf("%sParam4: %s,\n", indentationValues, ms.Param4.String()))
-	b.WriteString(fmt.Sprintf("%sParam5: %s,\n", indentationValues, ms.Param5.String()))
-	b.WriteString(fmt.Sprintf("%sParam6: %s,\n", indentationValues, ms.Param6.String()))
-	b.WriteString(fmt.Sprintf("%sParam7: %s,\n", indentationValues, ms.Param7.String()))
+	b.WriteString(fmt.Sprintf("%sLanguageId: %s,\n", indentationValues, ms.LanguageId.String()))
+	b.WriteString(fmt.Sprintf("%sCountryId: %s,\n", indentationValues, ms.CountryId.String()))
+	b.WriteString(fmt.Sprintf("%sRegionId: %s,\n", indentationValues, ms.RegionId.String()))
 	b.WriteString(fmt.Sprintf("%sParam8: %s,\n", indentationValues, ms.Param8.String()))
 	b.WriteString(fmt.Sprintf("%sParam9: %s,\n", indentationValues, ms.Param9.String()))
 	b.WriteString(fmt.Sprintf("%sParam10: %s,\n", indentationValues, ms.Param10.String()))
@@ -257,9 +257,9 @@ func NewCommunityCompetition() *CommunityCompetition {
 		Param2:              types.NewPrimitiveU8(0),
 		Param3:              types.NewPrimitiveU8(0),
 		Param4:              types.NewPrimitiveU16(0),
-		Param5:              types.NewPrimitiveU8(0),
-		Param6:              types.NewPrimitiveU8(0),
-		Param7:              types.NewPrimitiveU8(0),
+		LanguageId:          types.NewPrimitiveU8(0),
+		CountryId:           types.NewPrimitiveU8(0),
+		RegionId:            types.NewPrimitiveU8(0),
 		Param8:              types.NewDateTime(0),
 		Param9:              types.NewPrimitiveU32(0),
 		Param10:             types.NewPrimitiveU32(0),
@@ -271,9 +271,9 @@ func NewCommunityCompetition() *CommunityCompetition {
 }
 
 func (ms *CommunityCompetition) SetDebugFields(packet nex.PacketInterface) {
-	ms.Gathering.ID = types.NewPrimitiveU32(0xFFFFFFFF)
-	ms.Gathering.OwnerPID = packet.Sender().PID()
-	ms.Gathering.HostPID = packet.Sender().PID()
+	ms.Gathering.ID = types.NewPrimitiveU32(10000)
+	ms.Gathering.OwnerPID = types.NewPID(1446831925)
+	ms.Gathering.HostPID = types.NewPID(1446831925)
 	ms.Gathering.MinimumParticipants = types.NewPrimitiveU16(2)
 	ms.Gathering.MaximumParticipants = types.NewPrimitiveU16(30)
 	ms.Gathering.ParticipationPolicy = types.NewPrimitiveU32(95)
@@ -282,7 +282,7 @@ func (ms *CommunityCompetition) SetDebugFields(packet nex.PacketInterface) {
 	ms.Gathering.State = types.NewPrimitiveU32(0)
 	ms.Gathering.Description = types.NewString("test5")
 
-	s := "0033D01000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+	s := "0033d01000010000ff01000a02000000ffffffffffffffffffffffffbfbffbfe00ffab7f0000000000000000bfbffbfe00ffab7f000000000000000000000000010607000a000000000000000000000000000000000000007e914214000060010102010000000000"
 
 	data, _ := hex.DecodeString(s)
 
@@ -292,16 +292,16 @@ func (ms *CommunityCompetition) SetDebugFields(packet nex.PacketInterface) {
 	// 000000000000000000000000010607000a000000000000000000000000000000000000007e914214000060010102010000000000
 	ms.PersistentGathering.ParticipationStartDate = types.NewDateTime(0).FromTimestamp(time.Now().UTC().Add(-1 * time.Hour))
 	ms.PersistentGathering.ParticipationEndDate = types.NewDateTime(0).FromTimestamp(time.Now().UTC().Add(10 * time.Hour))
-	ms.Param1 = types.NewPrimitiveU32(0)
+	ms.Param1 = types.NewPrimitiveU32(1446831925)
 	ms.Param2 = types.NewPrimitiveU8(0)
 	ms.Param3 = types.NewPrimitiveU8(0)
 	ms.Param4 = types.NewPrimitiveU16(10200)
-	ms.Param5 = types.NewPrimitiveU8(1)
-	ms.Param6 = types.NewPrimitiveU8(49)
-	ms.Param7 = types.NewPrimitiveU8(2)
+	ms.LanguageId = types.NewPrimitiveU8(1)
+	ms.CountryId = types.NewPrimitiveU8(49)
+	ms.RegionId = types.NewPrimitiveU8(2)
 	ms.Param8 = types.NewDateTime(135900726528)
-	ms.Param9 = types.NewPrimitiveU32(0)
-	ms.Param10 = types.NewPrimitiveU32(0)
+	ms.Param9 = types.NewPrimitiveU32(1446831925)
+	ms.Param10 = types.NewPrimitiveU32(1446831925)
 	ms.Param11 = types.NewDateTime(0)
 	ms.Param12 = types.NewQBuffer(nil)
 }

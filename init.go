@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"os"
 	"strconv"
@@ -133,6 +134,11 @@ func init() {
 	globals.GRPCAccountCommonMetadata = metadata.Pairs(
 		"X-API-Key", accountGRPCAPIKey,
 	)
+
+	globals.Postgres, err = sql.Open("postgres", os.Getenv("PN_SSBWIIU_POSTGRES_URI"))
+	if err != nil {
+		globals.Logger.Critical(err.Error())
+	}
 
 	staticCredentials := credentials.NewStaticV4(globals.S3Key, globals.S3Secret, "")
 

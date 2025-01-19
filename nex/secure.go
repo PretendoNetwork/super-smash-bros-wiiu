@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	nex "github.com/PretendoNetwork/nex-go/v2"
+	common_globals "github.com/PretendoNetwork/nex-protocols-common-go/v2/globals"
 	"github.com/PretendoNetwork/super-smash-bros-wiiu/globals"
 )
 
@@ -40,6 +41,8 @@ func StartSecureServer() {
 		fmt.Printf("Method ID: %d\n", request.MethodID)
 		fmt.Println("====================")
 	})
+
+	globals.MatchmakingManager = common_globals.NewMatchmakingManager(globals.SecureEndpoint, globals.Postgres)
 
 	registerCommonSecureServerProtocols()
 	registerSecureServerNEXProtocols()

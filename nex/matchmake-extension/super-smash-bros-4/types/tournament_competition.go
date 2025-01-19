@@ -31,83 +31,243 @@ type TournamentCompetition struct {
 }
 
 // WriteTo writes the TournamentCompetition to the given writable
-func (dsppp *TournamentCompetition) WriteTo(writable types.Writable) {
+func (tc *TournamentCompetition) WriteTo(writable types.Writable) {
 	contentWritable := writable.CopyNew()
 
-	dsppp.TournamentId.WriteTo(contentWritable)
-	dsppp.Param2.WriteTo(contentWritable)
-	dsppp.Param3.WriteTo(contentWritable)
-	dsppp.TournamentName.WriteTo(contentWritable)
-	dsppp.Param5.WriteTo(contentWritable)
-	dsppp.StartTime.WriteTo(contentWritable)
-	dsppp.EndTime.WriteTo(contentWritable)
-	dsppp.ClosingTime.WriteTo(contentWritable)
-	dsppp.Param9.WriteTo(contentWritable)
-	dsppp.Param10.WriteTo(contentWritable)
-	dsppp.Param11.WriteTo(contentWritable)
-	dsppp.MaxParticipants.WriteTo(contentWritable)
-	dsppp.Param13.WriteTo(contentWritable)
-	dsppp.Param14.WriteTo(contentWritable)
-	dsppp.Param15.WriteTo(contentWritable)
-	dsppp.RoundTime.WriteTo(contentWritable)
-	dsppp.StockCount.WriteTo(contentWritable)
+	tc.TournamentId.WriteTo(contentWritable)
+	tc.Param2.WriteTo(contentWritable)
+	tc.Param3.WriteTo(contentWritable)
+	tc.TournamentName.WriteTo(contentWritable)
+	tc.Param5.WriteTo(contentWritable)
+	tc.StartTime.WriteTo(contentWritable)
+	tc.EndTime.WriteTo(contentWritable)
+	tc.ClosingTime.WriteTo(contentWritable)
+	tc.Param9.WriteTo(contentWritable)
+	tc.Param10.WriteTo(contentWritable)
+	tc.Param11.WriteTo(contentWritable)
+	tc.MaxParticipants.WriteTo(contentWritable)
+	tc.Param13.WriteTo(contentWritable)
+	tc.Param14.WriteTo(contentWritable)
+	tc.Param15.WriteTo(contentWritable)
+	tc.RoundTime.WriteTo(contentWritable)
+	tc.StockCount.WriteTo(contentWritable)
 
 	content := contentWritable.Bytes()
 
-	dsppp.WriteHeaderTo(writable, uint32(len(content)))
+	tc.WriteHeaderTo(writable, uint32(len(content)))
 
 	writable.Write(content)
 }
 
 // ExtractFrom extracts the TournamentCompetition from the given readable
-func (dsppp *TournamentCompetition) ExtractFrom(readable types.Readable) error {
+func (tc *TournamentCompetition) ExtractFrom(readable types.Readable) error {
 	var err error
 
-	err = dsppp.ExtractHeaderFrom(readable)
+	err = tc.ExtractHeaderFrom(readable)
 	if err != nil {
 		return fmt.Errorf("Failed to extract TournamentCompetition header. %s", err.Error())
 	}
 
-	/*err = dsppp.Profile.ExtractFrom(readable)
+	err = tc.TournamentId.ExtractFrom(readable)
 	if err != nil {
-		return fmt.Errorf("Failed to extract TournamentCompetition.Profile. %s", err.Error())
-	}*/
+		return fmt.Errorf("Failed to extract TournamentCompetition.TournamentId. %s", err.Error())
+	}
+
+	err = tc.Param2.ExtractFrom(readable)
+	if err != nil {
+		return fmt.Errorf("Failed to extract TournamentCompetition.Param2. %s", err.Error())
+	}
+
+	err = tc.Param3.ExtractFrom(readable)
+	if err != nil {
+		return fmt.Errorf("Failed to extract TournamentCompetition.Param3. %s", err.Error())
+	}
+
+	err = tc.TournamentName.ExtractFrom(readable)
+	if err != nil {
+		return fmt.Errorf("Failed to extract TournamentCompetition.TournamentName. %s", err.Error())
+	}
+
+	err = tc.Param5.ExtractFrom(readable)
+	if err != nil {
+		return fmt.Errorf("Failed to extract TournamentCompetition.Param5. %s", err.Error())
+	}
+
+	err = tc.StartTime.ExtractFrom(readable)
+	if err != nil {
+		return fmt.Errorf("Failed to extract TournamentCompetition.StartTime. %s", err.Error())
+	}
+
+	err = tc.EndTime.ExtractFrom(readable)
+	if err != nil {
+		return fmt.Errorf("Failed to extract TournamentCompetition.EndTime. %s", err.Error())
+	}
+
+	err = tc.ClosingTime.ExtractFrom(readable)
+	if err != nil {
+		return fmt.Errorf("Failed to extract TournamentCompetition.ClosingTime. %s", err.Error())
+	}
+
+	err = tc.Param9.ExtractFrom(readable)
+	if err != nil {
+		return fmt.Errorf("Failed to extract TournamentCompetition.Param9. %s", err.Error())
+	}
+
+	err = tc.Param10.ExtractFrom(readable)
+	if err != nil {
+		return fmt.Errorf("Failed to extract TournamentCompetition.Param10. %s", err.Error())
+	}
+
+	err = tc.Param11.ExtractFrom(readable)
+	if err != nil {
+		return fmt.Errorf("Failed to extract TournamentCompetition.Param11. %s", err.Error())
+	}
+
+	err = tc.MaxParticipants.ExtractFrom(readable)
+	if err != nil {
+		return fmt.Errorf("Failed to extract TournamentCompetition.MaxParticipants. %s", err.Error())
+	}
+
+	err = tc.Param13.ExtractFrom(readable)
+	if err != nil {
+		return fmt.Errorf("Failed to extract TournamentCompetition.Param13. %s", err.Error())
+	}
+
+	err = tc.Param14.ExtractFrom(readable)
+	if err != nil {
+		return fmt.Errorf("Failed to extract TournamentCompetition.Param14. %s", err.Error())
+	}
+
+	err = tc.Param15.ExtractFrom(readable)
+	if err != nil {
+		return fmt.Errorf("Failed to extract TournamentCompetition.Param15. %s", err.Error())
+	}
+
+	err = tc.RoundTime.ExtractFrom(readable)
+	if err != nil {
+		return fmt.Errorf("Failed to extract TournamentCompetition.RoundTime. %s", err.Error())
+	}
+
+	err = tc.StockCount.ExtractFrom(readable)
+	if err != nil {
+		return fmt.Errorf("Failed to extract TournamentCompetition.StockCount. %s", err.Error())
+	}
 
 	return nil
 }
 
 // Copy returns a new copied instance of TournamentCompetition
-func (dsppp *TournamentCompetition) Copy() types.RVType {
+func (tc *TournamentCompetition) Copy() types.RVType {
 	copied := NewTournamentCompetition()
 
-	copied.StructureVersion = dsppp.StructureVersion
-	//copied.Profile = dsppp.Profile.Copy().(*types.QBuffer)
+	copied.StructureVersion = tc.StructureVersion
+	copied.TournamentId = tc.TournamentId.Copy().(*types.PrimitiveU32)
+	copied.Param2 = tc.Param2.Copy().(*types.PrimitiveU8)
+	copied.Param3 = tc.Param3.Copy().(*types.PrimitiveU8)
+	copied.TournamentName = tc.TournamentName.Copy().(*types.String)
+	copied.Param5 = tc.Param5.Copy().(*types.PrimitiveU8)
+	copied.StartTime = tc.StartTime.Copy().(*types.DateTime)
+	copied.EndTime = tc.EndTime.Copy().(*types.DateTime)
+	copied.ClosingTime = tc.ClosingTime.Copy().(*types.PrimitiveU32)
+	copied.Param9 = tc.Param9.Copy().(*types.PrimitiveU32)
+	copied.Param10 = tc.Param10.Copy().(*types.PrimitiveU8)
+	copied.Param11 = tc.Param11.Copy().(*types.PrimitiveU8)
+	copied.MaxParticipants = tc.MaxParticipants.Copy().(*types.PrimitiveU16)
+	copied.Param13 = tc.Param13.Copy().(*types.PrimitiveU16)
+	copied.Param14 = tc.Param14.Copy().(*types.PrimitiveU8)
+	copied.Param15 = tc.Param15.Copy().(*types.PrimitiveU8)
+	copied.RoundTime = tc.RoundTime.Copy().(*types.PrimitiveU16)
+	copied.StockCount = tc.StockCount.Copy().(*types.PrimitiveU8)
 
 	return copied
 }
 
 // Equals checks if the given TournamentCompetition contains the same data as the current TournamentCompetition
-func (dsppp *TournamentCompetition) Equals(o types.RVType) bool {
+func (tc *TournamentCompetition) Equals(o types.RVType) bool {
 	if _, ok := o.(*TournamentCompetition); !ok {
 		return false
 	}
 
 	other := o.(*TournamentCompetition)
 
-	if dsppp.StructureVersion != other.StructureVersion {
+	if tc.StructureVersion != other.StructureVersion {
 		return false
 	}
 
-	return true //dsppp.Profile.Equals(other.Profile)
+	if !tc.TournamentId.Equals(other.TournamentId) {
+		return false
+	}
+
+	if !tc.Param2.Equals(other.Param2) {
+		return false
+	}
+
+	if !tc.Param3.Equals(other.Param3) {
+		return false
+	}
+
+	if !tc.TournamentName.Equals(other.TournamentName) {
+		return false
+	}
+
+	if !tc.Param5.Equals(other.Param5) {
+		return false
+	}
+
+	if !tc.StartTime.Equals(other.StartTime) {
+		return false
+	}
+
+	if !tc.EndTime.Equals(other.EndTime) {
+		return false
+	}
+
+	if !tc.ClosingTime.Equals(other.ClosingTime) {
+		return false
+	}
+
+	if !tc.Param9.Equals(other.Param9) {
+		return false
+	}
+
+	if !tc.Param10.Equals(other.Param10) {
+		return false
+	}
+
+	if !tc.Param11.Equals(other.Param11) {
+		return false
+	}
+
+	if !tc.MaxParticipants.Equals(other.MaxParticipants) {
+		return false
+	}
+
+	if !tc.Param13.Equals(other.Param13) {
+		return false
+	}
+
+	if !tc.Param14.Equals(other.Param14) {
+		return false
+	}
+
+	if !tc.Param15.Equals(other.Param15) {
+		return false
+	}
+
+	if !tc.RoundTime.Equals(other.RoundTime) {
+		return false
+	}
+
+	return tc.StockCount.Equals(other.StockCount)
 }
 
 // String returns the string representation of the TournamentCompetition
-func (dsppp *TournamentCompetition) String() string {
-	return dsppp.FormatToString(0)
+func (tc *TournamentCompetition) String() string {
+	return tc.FormatToString(0)
 }
 
 // FormatToString pretty-prints the TournamentCompetition using the provided indentation level
-func (dsppp *TournamentCompetition) FormatToString(indentationLevel int) string {
+func (tc *TournamentCompetition) FormatToString(indentationLevel int) string {
 	//indentationValues := strings.Repeat("\t", indentationLevel+1)
 	indentationEnd := strings.Repeat("\t", indentationLevel)
 
@@ -122,7 +282,7 @@ func (dsppp *TournamentCompetition) FormatToString(indentationLevel int) string 
 
 // NewTournamentCompetition returns a new TournamentCompetition
 func NewTournamentCompetition() *TournamentCompetition {
-	dsppp := &TournamentCompetition{
+	tc := &TournamentCompetition{
 		TournamentId:    types.NewPrimitiveU32(0),
 		Param2:          types.NewPrimitiveU8(0),
 		Param3:          types.NewPrimitiveU8(0),
@@ -142,5 +302,5 @@ func NewTournamentCompetition() *TournamentCompetition {
 		StockCount:      types.NewPrimitiveU8(0),
 	}
 
-	return dsppp
+	return tc
 }

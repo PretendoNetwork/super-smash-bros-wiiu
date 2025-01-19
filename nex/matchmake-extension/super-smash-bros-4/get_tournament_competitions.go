@@ -35,12 +35,12 @@ func GetTournamentCompetitions(err error, packet nex.PacketInterface, callID uin
 	t.Param2 = nex_types.NewPrimitiveU8(uint8(p2)) // IsFull?
 
 	p3, _ := strconv.ParseUint(file[2], 10, 8)
-	t.Param3 = nex_types.NewPrimitiveU8(uint8(p3)) // idk
+	t.Param3 = nex_types.NewPrimitiveU8(uint8(p3)) // unk
 
 	t.TournamentName = nex_types.NewString(file[3]) // TournamentName
 
 	p4, _ := strconv.ParseUint(file[4], 10, 8)
-	t.Param5 = nex_types.NewPrimitiveU8(uint8(p4))
+	t.Param5 = nex_types.NewPrimitiveU8(uint8(p4)) // unk
 
 	t.StartTime = nex_types.NewDateTime(0).FromTimestamp(time.Now().UTC().Add(-10 * time.Minute)) // StartTime
 	t.EndTime = nex_types.NewDateTime(0).FromTimestamp(time.Now().UTC().Add(10 * time.Hour))      // EndTime

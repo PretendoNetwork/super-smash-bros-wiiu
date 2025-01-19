@@ -6,6 +6,8 @@ import (
 
 	"github.com/PretendoNetwork/nex-go/v2"
 	nex_types "github.com/PretendoNetwork/nex-go/v2/types"
+
+	//mmdatabase "github.com/PretendoNetwork/nex-protocols-common-go/v2/matchmake-extension/database"
 	matchmake_extension_super_smash_bros_4 "github.com/PretendoNetwork/nex-protocols-go/v2/matchmake-extension/super-smash-bros-4"
 	"github.com/PretendoNetwork/super-smash-bros-wiiu/globals"
 )
@@ -24,7 +26,7 @@ func JoinOrCreateMatchmakeSession(err error, packet nex.PacketInterface, callID 
 	fmt.Println(hex.EncodeToString(packet.RMCMessage().Parameters))
 
 	// boilerplate (needs to go in protocols common)
-	endpoint := packet.Sender().Endpoint()
+	endpoint := packet.Sender().Endpoint().(*nex.PRUDPEndPoint)
 	parametersStream := nex.NewByteStreamIn(packet.RMCMessage().Parameters, endpoint.LibraryVersions(), endpoint.ByteStreamSettings())
 
 	tournamentId := nex_types.NewPrimitiveU32(0)
@@ -41,6 +43,8 @@ func JoinOrCreateMatchmakeSession(err error, packet nex.PacketInterface, callID 
 
 	// not boilerplate
 	fmt.Println(anyGathering.FormatToString(0))
+
+	anyGathering.WriteTo(rmcResponseStream)
 
 	rmcResponse := nex.NewRMCSuccess(globals.SecureEndpoint, rmcResponseStream.Bytes())
 	rmcResponse.ProtocolID = matchmake_extension_super_smash_bros_4.ProtocolID
