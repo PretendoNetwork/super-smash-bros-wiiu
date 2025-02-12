@@ -29,10 +29,10 @@ func JoinOrCreateMatchmakeSession(err error, packet nex.PacketInterface, callID 
 	endpoint := packet.Sender().Endpoint().(*nex.PRUDPEndPoint)
 	parametersStream := nex.NewByteStreamIn(packet.RMCMessage().Parameters, endpoint.LibraryVersions(), endpoint.ByteStreamSettings())
 
-	tournamentId := nex_types.NewPrimitiveU32(0)
+	tournamentId := nex_types.NewUInt32(0)
 	tournamentId.ExtractFrom(parametersStream)
 
-	unk2 := nex_types.NewPrimitiveU32(0)
+	unk2 := nex_types.NewUInt32(0)
 	unk2.ExtractFrom(parametersStream)
 
 	anyGathering := nex_types.NewAnyDataHolder()
@@ -43,6 +43,16 @@ func JoinOrCreateMatchmakeSession(err error, packet nex.PacketInterface, callID 
 
 	// not boilerplate
 	fmt.Println(anyGathering.FormatToString(0))
+
+	globals.MatchmakingManager.Mutex.Lock()
+
+	// TODO: somebody please fix this i hate this code this is terrible do NOT let this make it to production
+	// matchmakeSession, _, nexError := mmdatabase.GetMatchmakeSessionByID(globals.MatchmakingManager, endpoint, tournamentId.Value)
+	// if nexError.ResultCode == nex.ResultCodes.RendezVous.SessionVoid {
+
+	// }
+
+	//resultMatchmakeSession := match_making_types.NewMatchmakeSession()
 
 	anyGathering.WriteTo(rmcResponseStream)
 

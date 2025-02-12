@@ -26,7 +26,7 @@ func registerCommonSecureServerProtocols() {
 	secureProtocol := secure.NewProtocol()
 	globals.SecureEndpoint.RegisterServiceProtocol(secureProtocol)
 	secure := common_secure.NewCommonProtocol(secureProtocol)
-	secure.CreateReportDBRecord = func(pid *types.PID, reportID *types.PrimitiveU32, reportData *types.QBuffer) error {
+	secure.CreateReportDBRecord = func(pid types.PID, reportID types.UInt32, reportData types.QBuffer) error {
 		return nil
 	}
 
@@ -56,7 +56,7 @@ func registerCommonSecureServerProtocols() {
 	commonMatchmakeExtensionProtocol.SetManager(globals.MatchmakingManager)
 
 	commonMatchmakeExtensionProtocol.CleanupSearchMatchmakeSession = nex_matchmake_extension_common.CleanupSearchMatchmakeSession
-	commonMatchmakeExtensionProtocol.OnAfterAutoMatchmakeWithSearchCriteriaPostpone = func(packet nex.PacketInterface, lstSearchCriteria *types.List[*mm_types.MatchmakeSessionSearchCriteria], anyGathering *types.AnyDataHolder, strMessage *types.String) {
+	commonMatchmakeExtensionProtocol.OnAfterAutoMatchmakeWithSearchCriteriaPostpone = func(packet nex.PacketInterface, lstSearchCriteria types.List[mm_types.MatchmakeSessionSearchCriteria], anyGathering mm_types.GatheringHolder, strMessage types.String) {
 		fmt.Println(anyGathering)
 	}
 }

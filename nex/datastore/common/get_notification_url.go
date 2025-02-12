@@ -11,11 +11,11 @@ import (
 	globals "github.com/PretendoNetwork/super-smash-bros-wiiu/globals"
 )
 
-func GetNotificationURL(err error, packet nex.PacketInterface, callID uint32, param *datastore_types.DataStoreGetNotificationURLParam) (*nex.RMCMessage, *nex.Error) {
+func GetNotificationURL(err error, packet nex.PacketInterface, callID uint32, param datastore_types.DataStoreGetNotificationURLParam) (*nex.RMCMessage, *nex.Error) {
 	rmcResponseStream := nex.NewByteStreamOut(globals.SecureServer.LibraryVersions, globals.HPPServer.ByteStreamSettings())
 
 	fmt.Println(hex.EncodeToString(packet.RMCMessage().Parameters))
-	fmt.Println(param.PreviousURL.Value)
+	fmt.Println(param.PreviousURL.String())
 
 	urlInfo := datastore_types.NewDataStoreReqGetNotificationURLInfo()
 

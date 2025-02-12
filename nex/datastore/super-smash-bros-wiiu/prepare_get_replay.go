@@ -9,9 +9,9 @@ import (
 	"github.com/PretendoNetwork/super-smash-bros-wiiu/globals"
 )
 
-func PrepareGetReplay(err error, packet nex.PacketInterface, callID uint32, param *datastore_super_smash_bros_4_protocol_types.DataStorePrepareGetReplayParam) (*nex.RMCMessage, *nex.Error) {
+func PrepareGetReplay(err error, packet nex.PacketInterface, callID uint32, param datastore_super_smash_bros_4_protocol_types.DataStorePrepareGetReplayParam) (*nex.RMCMessage, *nex.Error) {
 	fakeData := datastore_types.NewDataStoreReqGetInfo()
-	fakeData.DataID = types.NewPrimitiveU64(1)
+	fakeData.DataID = types.NewUInt64(1)
 	fakeData.URL = types.NewString("http://127.0.0.1")
 
 	rmcResponseStream := nex.NewByteStreamOut(globals.SecureServer.LibraryVersions, globals.SecureServer.ByteStreamSettings)

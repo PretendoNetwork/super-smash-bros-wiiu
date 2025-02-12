@@ -8,7 +8,7 @@ import (
 	"github.com/PretendoNetwork/super-smash-bros-wiiu/globals"
 )
 
-func GetProfiles(err error, packet nex.PacketInterface, callID uint32, pidList *types.List[*types.PID]) (*nex.RMCMessage, *nex.Error) {
+func GetProfiles(err error, packet nex.PacketInterface, callID uint32, pidList types.List[types.PID]) (*nex.RMCMessage, *nex.Error) {
 	//fmt.Printf("PID List: %s\n", pidList.String())
 
 	config := types.NewList[*datastore_super_smash_bros_4_protocol_types.DataStoreProfileInfo]()

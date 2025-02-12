@@ -22,8 +22,8 @@ func SimpleFindByID(err error, packet nex.PacketInterface, callID uint32, packet
 	fmt.Println(hex.EncodeToString(packet.RMCMessage().Parameters))
 
 	//write to struct
-	tournamentList := nex_types.NewList[*nex_types.PrimitiveU32]()
-	tournamentList.Append(nex_types.NewPrimitiveU32(uint32(5))) // Current Number of Players
+	tournamentList := nex_types.NewList[*nex_types.UInt32]()
+	tournamentList.Append(nex_types.NewUInt32(uint32(5))) // Current Number of Players
 	tournamentList.WriteTo(rmcResponseStream)
 
 	rmcResponse := nex.NewRMCSuccess(globals.SecureEndpoint, rmcResponseStream.Bytes())

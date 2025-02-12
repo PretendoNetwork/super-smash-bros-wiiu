@@ -11,20 +11,20 @@ import (
 // Tournament is a type within the MatchmakeExtensionSuperSmashBros.4 protocol
 type Tournament struct {
 	types.Structure
-	Param1  *types.PrimitiveU8
-	Param2  *types.PrimitiveU32
-	Param3  *types.PrimitiveU8
-	Param4  *types.PrimitiveU8
-	Param5  *types.PrimitiveU8
-	Param6  *types.List[*types.PrimitiveU8]
-	Param7  *types.PrimitiveU8
-	Param8  *types.List[*types.PrimitiveU32]
-	Param9  *types.List[*types.PrimitiveU16]
-	Param10 *types.List[*types.PrimitiveU8]
-	Param11 *types.List[*types.PrimitiveU8]
-	Param12 *types.PrimitiveU64
-	Param13 *types.PrimitiveU8
-	Param14 *types.List[*types.PrimitiveU8]
+	Param1  *types.UInt8
+	Param2  *types.UInt32
+	Param3  *types.UInt8
+	Param4  *types.UInt8
+	Param5  *types.UInt8
+	Param6  *types.List[*types.UInt8]
+	Param7  *types.UInt8
+	Param8  *types.List[*types.UInt32]
+	Param9  *types.List[*types.UInt16]
+	Param10 *types.List[*types.UInt8]
+	Param11 *types.List[*types.UInt8]
+	Param12 *types.UInt64
+	Param13 *types.UInt8
+	Param14 *types.List[*types.UInt8]
 }
 
 // WriteTo writes the Tournament to the given writable
@@ -117,20 +117,20 @@ func (dsppp *Tournament) FormatToString(indentationLevel int) string {
 // NewTournament returns a new Tournament
 func NewTournament() *Tournament {
 	dsppp := &Tournament{
-		Param1:  types.NewPrimitiveU8(0),
-		Param2:  types.NewPrimitiveU32(0),
-		Param3:  types.NewPrimitiveU8(0),
-		Param4:  types.NewPrimitiveU8(0),
-		Param5:  types.NewPrimitiveU8(0),
-		Param6:  types.NewList[*types.PrimitiveU8](),
-		Param7:  types.NewPrimitiveU8(0),
-		Param8:  types.NewList[*types.PrimitiveU32](),
-		Param9:  types.NewList[*types.PrimitiveU16](),
-		Param10: types.NewList[*types.PrimitiveU8](),
-		Param11: types.NewList[*types.PrimitiveU8](),
-		Param12: types.NewPrimitiveU64(0),
-		Param13: types.NewPrimitiveU8(0),
-		Param14: types.NewList[*types.PrimitiveU8](),
+		Param1:  types.NewUInt8(0),
+		Param2:  types.NewUInt32(0),
+		Param3:  types.NewUInt8(0),
+		Param4:  types.NewUInt8(0),
+		Param5:  types.NewUInt8(0),
+		Param6:  types.NewList[*types.UInt8](),
+		Param7:  types.NewUInt8(0),
+		Param8:  types.NewList[*types.UInt32](),
+		Param9:  types.NewList[*types.UInt16](),
+		Param10: types.NewList[*types.UInt8](),
+		Param11: types.NewList[*types.UInt8](),
+		Param12: types.NewUInt64(0),
+		Param13: types.NewUInt8(0),
+		Param14: types.NewList[*types.UInt8](),
 	}
 
 	return dsppp

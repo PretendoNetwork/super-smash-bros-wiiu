@@ -11,27 +11,27 @@ import (
 // TournamentCompetition is a type within the MatchmakeExtensionSuperSmashBros.4 protocol
 type TournamentCompetition struct {
 	types.Structure
-	TournamentId    *types.PrimitiveU32
-	Param2          *types.PrimitiveU8
-	Param3          *types.PrimitiveU8
-	TournamentName  *types.String
-	Param5          *types.PrimitiveU8
-	StartTime       *types.DateTime
-	EndTime         *types.DateTime
-	ClosingTime     *types.PrimitiveU32 // closing time in seconds
-	Param9          *types.PrimitiveU32
-	Param10         *types.PrimitiveU8
-	Param11         *types.PrimitiveU8
-	MaxParticipants *types.PrimitiveU16
-	Param13         *types.PrimitiveU16
-	Param14         *types.PrimitiveU8
-	Param15         *types.PrimitiveU8
-	RoundTime       *types.PrimitiveU16 // round time in seconds
-	StockCount      *types.PrimitiveU8
+	TournamentId    types.UInt32
+	Param2          types.UInt8
+	Param3          types.UInt8
+	TournamentName  types.String
+	Param5          types.UInt8
+	StartTime       types.DateTime
+	EndTime         types.DateTime
+	ClosingTime     types.UInt32 // closing time in seconds
+	Param9          types.UInt32
+	Param10         types.UInt8
+	Param11         types.UInt8
+	MaxParticipants types.UInt16
+	Param13         types.UInt16
+	Param14         types.UInt8
+	Param15         types.UInt8
+	RoundTime       types.UInt16 // round time in seconds
+	StockCount      types.UInt8
 }
 
 // WriteTo writes the TournamentCompetition to the given writable
-func (tc *TournamentCompetition) WriteTo(writable types.Writable) {
+func (tc TournamentCompetition) WriteTo(writable types.Writable) {
 	contentWritable := writable.CopyNew()
 
 	tc.TournamentId.WriteTo(contentWritable)
@@ -157,38 +157,38 @@ func (tc *TournamentCompetition) ExtractFrom(readable types.Readable) error {
 }
 
 // Copy returns a new copied instance of TournamentCompetition
-func (tc *TournamentCompetition) Copy() types.RVType {
+func (tc TournamentCompetition) Copy() types.RVType {
 	copied := NewTournamentCompetition()
 
 	copied.StructureVersion = tc.StructureVersion
-	copied.TournamentId = tc.TournamentId.Copy().(*types.PrimitiveU32)
-	copied.Param2 = tc.Param2.Copy().(*types.PrimitiveU8)
-	copied.Param3 = tc.Param3.Copy().(*types.PrimitiveU8)
-	copied.TournamentName = tc.TournamentName.Copy().(*types.String)
-	copied.Param5 = tc.Param5.Copy().(*types.PrimitiveU8)
-	copied.StartTime = tc.StartTime.Copy().(*types.DateTime)
-	copied.EndTime = tc.EndTime.Copy().(*types.DateTime)
-	copied.ClosingTime = tc.ClosingTime.Copy().(*types.PrimitiveU32)
-	copied.Param9 = tc.Param9.Copy().(*types.PrimitiveU32)
-	copied.Param10 = tc.Param10.Copy().(*types.PrimitiveU8)
-	copied.Param11 = tc.Param11.Copy().(*types.PrimitiveU8)
-	copied.MaxParticipants = tc.MaxParticipants.Copy().(*types.PrimitiveU16)
-	copied.Param13 = tc.Param13.Copy().(*types.PrimitiveU16)
-	copied.Param14 = tc.Param14.Copy().(*types.PrimitiveU8)
-	copied.Param15 = tc.Param15.Copy().(*types.PrimitiveU8)
-	copied.RoundTime = tc.RoundTime.Copy().(*types.PrimitiveU16)
-	copied.StockCount = tc.StockCount.Copy().(*types.PrimitiveU8)
+	copied.TournamentId = tc.TournamentId.Copy().(types.UInt32)
+	copied.Param2 = tc.Param2.Copy().(types.UInt8)
+	copied.Param3 = tc.Param3.Copy().(types.UInt8)
+	copied.TournamentName = tc.TournamentName.Copy().(types.String)
+	copied.Param5 = tc.Param5.Copy().(types.UInt8)
+	copied.StartTime = tc.StartTime.Copy().(types.DateTime)
+	copied.EndTime = tc.EndTime.Copy().(types.DateTime)
+	copied.ClosingTime = tc.ClosingTime.Copy().(types.UInt32)
+	copied.Param9 = tc.Param9.Copy().(types.UInt32)
+	copied.Param10 = tc.Param10.Copy().(types.UInt8)
+	copied.Param11 = tc.Param11.Copy().(types.UInt8)
+	copied.MaxParticipants = tc.MaxParticipants.Copy().(types.UInt16)
+	copied.Param13 = tc.Param13.Copy().(types.UInt16)
+	copied.Param14 = tc.Param14.Copy().(types.UInt8)
+	copied.Param15 = tc.Param15.Copy().(types.UInt8)
+	copied.RoundTime = tc.RoundTime.Copy().(types.UInt16)
+	copied.StockCount = tc.StockCount.Copy().(types.UInt8)
 
 	return copied
 }
 
 // Equals checks if the given TournamentCompetition contains the same data as the current TournamentCompetition
-func (tc *TournamentCompetition) Equals(o types.RVType) bool {
-	if _, ok := o.(*TournamentCompetition); !ok {
+func (tc TournamentCompetition) Equals(o types.RVType) bool {
+	if _, ok := o.(TournamentCompetition); !ok {
 		return false
 	}
 
-	other := o.(*TournamentCompetition)
+	other := o.(TournamentCompetition)
 
 	if tc.StructureVersion != other.StructureVersion {
 		return false
@@ -261,13 +261,22 @@ func (tc *TournamentCompetition) Equals(o types.RVType) bool {
 	return tc.StockCount.Equals(other.StockCount)
 }
 
+func (tc TournamentCompetition) CopyRef() types.RVTypePtr {
+	copied := tc.Copy().(TournamentCompetition)
+	return &copied
+}
+
+func (tc *TournamentCompetition) Deref() types.RVType {
+	return *tc
+}
+
 // String returns the string representation of the TournamentCompetition
-func (tc *TournamentCompetition) String() string {
+func (tc TournamentCompetition) String() string {
 	return tc.FormatToString(0)
 }
 
 // FormatToString pretty-prints the TournamentCompetition using the provided indentation level
-func (tc *TournamentCompetition) FormatToString(indentationLevel int) string {
+func (tc TournamentCompetition) FormatToString(indentationLevel int) string {
 	//indentationValues := strings.Repeat("\t", indentationLevel+1)
 	indentationEnd := strings.Repeat("\t", indentationLevel)
 
@@ -281,26 +290,24 @@ func (tc *TournamentCompetition) FormatToString(indentationLevel int) string {
 }
 
 // NewTournamentCompetition returns a new TournamentCompetition
-func NewTournamentCompetition() *TournamentCompetition {
-	tc := &TournamentCompetition{
-		TournamentId:    types.NewPrimitiveU32(0),
-		Param2:          types.NewPrimitiveU8(0),
-		Param3:          types.NewPrimitiveU8(0),
+func NewTournamentCompetition() TournamentCompetition {
+	return TournamentCompetition{
+		TournamentId:    types.NewUInt32(0),
+		Param2:          types.NewUInt8(0),
+		Param3:          types.NewUInt8(0),
 		TournamentName:  types.NewString(""),
-		Param5:          types.NewPrimitiveU8(0),
+		Param5:          types.NewUInt8(0),
 		StartTime:       types.NewDateTime(0).Now(),
 		EndTime:         types.NewDateTime(0).Now(),
-		ClosingTime:     types.NewPrimitiveU32(0),
-		Param9:          types.NewPrimitiveU32(0),
-		Param10:         types.NewPrimitiveU8(0),
-		Param11:         types.NewPrimitiveU8(0),
-		MaxParticipants: types.NewPrimitiveU16(0),
-		Param13:         types.NewPrimitiveU16(0),
-		Param14:         types.NewPrimitiveU8(0),
-		Param15:         types.NewPrimitiveU8(0),
-		RoundTime:       types.NewPrimitiveU16(0),
-		StockCount:      types.NewPrimitiveU8(0),
+		ClosingTime:     types.NewUInt32(0),
+		Param9:          types.NewUInt32(0),
+		Param10:         types.NewUInt8(0),
+		Param11:         types.NewUInt8(0),
+		MaxParticipants: types.NewUInt16(0),
+		Param13:         types.NewUInt16(0),
+		Param14:         types.NewUInt8(0),
+		Param15:         types.NewUInt8(0),
+		RoundTime:       types.NewUInt16(0),
+		StockCount:      types.NewUInt8(0),
 	}
-
-	return tc
 }

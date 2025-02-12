@@ -15,23 +15,23 @@ import (
 // CommunityCompetition is a type within the Matchmaking protocol
 type CommunityCompetition struct {
 	types.Structure
-	*matchmaking_types.PersistentGathering
-	Param1     *types.PrimitiveU32
-	Param2     *types.PrimitiveU8
-	Param3     *types.PrimitiveU8
-	Param4     *types.PrimitiveU16
-	LanguageId *types.PrimitiveU8
-	CountryId  *types.PrimitiveU8
-	RegionId   *types.PrimitiveU8
-	Param8     *types.DateTime
-	Param9     *types.PrimitiveU32
-	Param10    *types.PrimitiveU32
-	Param11    *types.DateTime
-	Param12    *types.QBuffer
+	matchmaking_types.PersistentGathering
+	Param1     types.UInt32
+	Param2     types.UInt8
+	Param3     types.UInt8
+	Param4     types.UInt16
+	LanguageId types.UInt8
+	CountryId  types.UInt8
+	RegionId   types.UInt8
+	Param8     types.DateTime
+	Param9     types.UInt32
+	Param10    types.UInt32
+	Param11    types.DateTime
+	Param12    types.QBuffer
 }
 
 // WriteTo writes the CommunityCompetition to the given writable
-func (ms *CommunityCompetition) WriteTo(writable types.Writable) {
+func (ms CommunityCompetition) WriteTo(writable types.Writable) {
 	ms.PersistentGathering.WriteTo(writable)
 
 	contentWritable := writable.CopyNew()
@@ -134,34 +134,34 @@ func (ms *CommunityCompetition) ExtractFrom(readable types.Readable) error {
 }
 
 // Copy returns a new copied instance of CommunityCompetition
-func (ms *CommunityCompetition) Copy() types.RVType {
+func (ms CommunityCompetition) Copy() types.RVType {
 	copied := NewCommunityCompetition()
 
 	copied.StructureVersion = ms.StructureVersion
-	copied.PersistentGathering = ms.PersistentGathering.Copy().(*matchmaking_types.PersistentGathering)
-	copied.Param1 = ms.Param1.Copy().(*types.PrimitiveU32)
-	copied.Param2 = ms.Param2.Copy().(*types.PrimitiveU8)
-	copied.Param3 = ms.Param3.Copy().(*types.PrimitiveU8)
-	copied.Param4 = ms.Param4.Copy().(*types.PrimitiveU16)
-	copied.LanguageId = ms.LanguageId.Copy().(*types.PrimitiveU8)
-	copied.CountryId = ms.CountryId.Copy().(*types.PrimitiveU8)
-	copied.RegionId = ms.RegionId.Copy().(*types.PrimitiveU8)
-	copied.Param8 = ms.Param8.Copy().(*types.DateTime)
-	copied.Param9 = ms.Param9.Copy().(*types.PrimitiveU32)
-	copied.Param10 = ms.Param10.Copy().(*types.PrimitiveU32)
-	copied.Param11 = ms.Param11.Copy().(*types.DateTime)
-	copied.Param12 = ms.Param12.Copy().(*types.QBuffer)
+	copied.PersistentGathering = ms.PersistentGathering.Copy().(matchmaking_types.PersistentGathering)
+	copied.Param1 = ms.Param1.Copy().(types.UInt32)
+	copied.Param2 = ms.Param2.Copy().(types.UInt8)
+	copied.Param3 = ms.Param3.Copy().(types.UInt8)
+	copied.Param4 = ms.Param4.Copy().(types.UInt16)
+	copied.LanguageId = ms.LanguageId.Copy().(types.UInt8)
+	copied.CountryId = ms.CountryId.Copy().(types.UInt8)
+	copied.RegionId = ms.RegionId.Copy().(types.UInt8)
+	copied.Param8 = ms.Param8.Copy().(types.DateTime)
+	copied.Param9 = ms.Param9.Copy().(types.UInt32)
+	copied.Param10 = ms.Param10.Copy().(types.UInt32)
+	copied.Param11 = ms.Param11.Copy().(types.DateTime)
+	copied.Param12 = ms.Param12.Copy().(types.QBuffer)
 
 	return copied
 }
 
 // Equals checks if the given CommunityCompetition contains the same data as the current CommunityCompetition
-func (ms *CommunityCompetition) Equals(o types.RVType) bool {
-	if _, ok := o.(*CommunityCompetition); !ok {
+func (ms CommunityCompetition) Equals(o types.RVType) bool {
+	if _, ok := o.(CommunityCompetition); !ok {
 		return false
 	}
 
-	other := o.(*CommunityCompetition)
+	other := o.(CommunityCompetition)
 
 	if ms.StructureVersion != other.StructureVersion {
 		return false
@@ -219,12 +219,12 @@ func (ms *CommunityCompetition) Equals(o types.RVType) bool {
 }
 
 // String returns the string representation of the CommunityCompetition
-func (ms *CommunityCompetition) String() string {
+func (ms CommunityCompetition) String() string {
 	return ms.FormatToString(0)
 }
 
 // FormatToString pretty-prints the CommunityCompetition using the provided indentation level
-func (ms *CommunityCompetition) FormatToString(indentationLevel int) string {
+func (ms CommunityCompetition) FormatToString(indentationLevel int) string {
 	indentationValues := strings.Repeat("\t", indentationLevel+1)
 	indentationEnd := strings.Repeat("\t", indentationLevel)
 
@@ -250,36 +250,34 @@ func (ms *CommunityCompetition) FormatToString(indentationLevel int) string {
 }
 
 // NewCommunityCompetition returns a new CommunityCompetition
-func NewCommunityCompetition() *CommunityCompetition {
-	ms := &CommunityCompetition{
+func NewCommunityCompetition() CommunityCompetition {
+	return CommunityCompetition{
 		PersistentGathering: matchmaking_types.NewPersistentGathering(),
-		Param1:              types.NewPrimitiveU32(0),
-		Param2:              types.NewPrimitiveU8(0),
-		Param3:              types.NewPrimitiveU8(0),
-		Param4:              types.NewPrimitiveU16(0),
-		LanguageId:          types.NewPrimitiveU8(0),
-		CountryId:           types.NewPrimitiveU8(0),
-		RegionId:            types.NewPrimitiveU8(0),
+		Param1:              types.NewUInt32(0),
+		Param2:              types.NewUInt8(0),
+		Param3:              types.NewUInt8(0),
+		Param4:              types.NewUInt16(0),
+		LanguageId:          types.NewUInt8(0),
+		CountryId:           types.NewUInt8(0),
+		RegionId:            types.NewUInt8(0),
 		Param8:              types.NewDateTime(0),
-		Param9:              types.NewPrimitiveU32(0),
-		Param10:             types.NewPrimitiveU32(0),
+		Param9:              types.NewUInt32(0),
+		Param10:             types.NewUInt32(0),
 		Param11:             types.NewDateTime(0),
 		Param12:             types.NewQBuffer(nil),
 	}
-
-	return ms
 }
 
 func (ms *CommunityCompetition) SetDebugFields(packet nex.PacketInterface) {
-	ms.Gathering.ID = types.NewPrimitiveU32(10000)
+	ms.Gathering.ID = types.NewUInt32(10000)
 	ms.Gathering.OwnerPID = types.NewPID(1446831925)
 	ms.Gathering.HostPID = types.NewPID(1446831925)
-	ms.Gathering.MinimumParticipants = types.NewPrimitiveU16(2)
-	ms.Gathering.MaximumParticipants = types.NewPrimitiveU16(30)
-	ms.Gathering.ParticipationPolicy = types.NewPrimitiveU32(95)
-	ms.Gathering.PolicyArgument = types.NewPrimitiveU32(0)
-	ms.Gathering.Flags = types.NewPrimitiveU32(641)
-	ms.Gathering.State = types.NewPrimitiveU32(0)
+	ms.Gathering.MinimumParticipants = types.NewUInt16(2)
+	ms.Gathering.MaximumParticipants = types.NewUInt16(30)
+	ms.Gathering.ParticipationPolicy = types.NewUInt32(95)
+	ms.Gathering.PolicyArgument = types.NewUInt32(0)
+	ms.Gathering.Flags = types.NewUInt32(641)
+	ms.Gathering.State = types.NewUInt32(0)
 	ms.Gathering.Description = types.NewString("test5")
 
 	s := "0033d01000010000ff01000a02000000ffffffffffffffffffffffffbfbffbfe00ffab7f0000000000000000bfbffbfe00ffab7f000000000000000000000000010607000a000000000000000000000000000000000000007e914214000060010102010000000000"
@@ -290,18 +288,18 @@ func (ms *CommunityCompetition) SetDebugFields(packet nex.PacketInterface) {
 	// ApplicationBuffer dumped from a request:
 	// 0033d01000010000ff01000a02000000ffffffffffffffffffffffffbfbffbfe00ffab7f0000000000000000bfbffbfe00ffab7f
 	// 000000000000000000000000010607000a000000000000000000000000000000000000007e914214000060010102010000000000
-	ms.PersistentGathering.ParticipationStartDate = types.NewDateTime(0).FromTimestamp(time.Now().UTC().Add(-1 * time.Hour))
-	ms.PersistentGathering.ParticipationEndDate = types.NewDateTime(0).FromTimestamp(time.Now().UTC().Add(10 * time.Hour))
-	ms.Param1 = types.NewPrimitiveU32(1446831925)
-	ms.Param2 = types.NewPrimitiveU8(0)
-	ms.Param3 = types.NewPrimitiveU8(0)
-	ms.Param4 = types.NewPrimitiveU16(10200)
-	ms.LanguageId = types.NewPrimitiveU8(1)
-	ms.CountryId = types.NewPrimitiveU8(49)
-	ms.RegionId = types.NewPrimitiveU8(2)
+	ms.PersistentGathering.ParticipationStartDate.FromTimestamp(time.Now().UTC().Add(-1 * time.Hour))
+	ms.PersistentGathering.ParticipationEndDate.FromTimestamp(time.Now().UTC().Add(10 * time.Hour))
+	ms.Param1 = types.NewUInt32(1446831925)
+	ms.Param2 = types.NewUInt8(0)
+	ms.Param3 = types.NewUInt8(0)
+	ms.Param4 = types.NewUInt16(10200)
+	ms.LanguageId = types.NewUInt8(1)
+	ms.CountryId = types.NewUInt8(49)
+	ms.RegionId = types.NewUInt8(2)
 	ms.Param8 = types.NewDateTime(135900726528)
-	ms.Param9 = types.NewPrimitiveU32(1446831925)
-	ms.Param10 = types.NewPrimitiveU32(1446831925)
+	ms.Param9 = types.NewUInt32(1446831925)
+	ms.Param10 = types.NewUInt32(1446831925)
 	ms.Param11 = types.NewDateTime(0)
 	ms.Param12 = types.NewQBuffer(nil)
 }
