@@ -17,7 +17,9 @@ import (
 	nat_traversal "github.com/PretendoNetwork/nex-protocols-go/v2/nat-traversal"
 	secure "github.com/PretendoNetwork/nex-protocols-go/v2/secure-connection"
 	"github.com/PretendoNetwork/super-smash-bros-wiiu/globals"
-	local_matchmake_extension_super_smash_bros_4 "github.com/PretendoNetwork/super-smash-bros-wiiu/nex/matchmake-extension/super-smash-bros-4"
+
+	//local_matchmake_extension_super_smash_bros_4 "github.com/PretendoNetwork/super-smash-bros-wiiu/nex/matchmake-extension/super-smash-bros-4"
+	//local_matchmake_extension_database_super_smash_bros_4 "github.com/PretendoNetwork/super-smash-bros-wiiu/nex/matchmake-extension/super-smash-bros-4/database"
 
 	nex_matchmake_extension_common "github.com/PretendoNetwork/super-smash-bros-wiiu/nex/matchmake-extension/common"
 )
@@ -42,21 +44,24 @@ func registerCommonSecureServerProtocols() {
 	globals.SecureEndpoint.RegisterServiceProtocol(matchMakingExtProtocol)
 	common_match_making_ext.NewCommonProtocol(matchMakingExtProtocol).SetManager(globals.MatchmakingManager)
 
+	//_ = local_matchmake_extension_database_super_smash_bros_4.InitDatabase()
+
 	matchmakeExtensionProtocol := matchmake_extension_super_smash_bros_4.NewProtocol(globals.SecureEndpoint)
-	matchmakeExtensionProtocol.SearchCommunityCompetition = local_matchmake_extension_super_smash_bros_4.SearchCommunityCompetition
-	matchmakeExtensionProtocol.FindCommunityCompetitionsByParticipant = local_matchmake_extension_super_smash_bros_4.FindCommunityCompetitionsByParticipant
-	matchmakeExtensionProtocol.GetTournamentCompetitions = local_matchmake_extension_super_smash_bros_4.GetTournamentCompetitions
-	matchmakeExtensionProtocol.SelectCommunityCompetitionByOwner = local_matchmake_extension_super_smash_bros_4.SelectCommunityCompetitionByOwner
-	matchmakeExtensionProtocol.SimpleFindByID = local_matchmake_extension_super_smash_bros_4.SimpleFindByID
-	matchmakeExtensionProtocol.RegisterCommunityCompetition = local_matchmake_extension_super_smash_bros_4.RegisterCommunityCompetition
-	matchmakeExtensionProtocol.JoinOrCreateMatchmakeSession = local_matchmake_extension_super_smash_bros_4.JoinOrCreateMatchmakeSession
+	//matchmakeExtensionProtocol.SearchCommunityCompetition = local_matchmake_extension_super_smash_bros_4.SearchCommunityCompetition
+	//matchmakeExtensionProtocol.FindCommunityCompetitionsByParticipant = local_matchmake_extension_super_smash_bros_4.FindCommunityCompetitionsByParticipant
+	//matchmakeExtensionProtocol.GetTournamentCompetitions = local_matchmake_extension_super_smash_bros_4.GetTournamentCompetitions
+	//matchmakeExtensionProtocol.SelectCommunityCompetitionByOwner = local_matchmake_extension_super_smash_bros_4.SelectCommunityCompetitionByOwner
+	//matchmakeExtensionProtocol.SimpleFindByID = local_matchmake_extension_super_smash_bros_4.SimpleFindByID
+	//matchmakeExtensionProtocol.RegisterCommunityCompetition = local_matchmake_extension_super_smash_bros_4.RegisterCommunityCompetition
+	//matchmakeExtensionProtocol.JoinOrCreateMatchmakeSession = local_matchmake_extension_super_smash_bros_4.JoinOrCreateMatchmakeSession
+
 	globals.SecureEndpoint.RegisterServiceProtocol(matchmakeExtensionProtocol)
 
-	commonMatchmakeExtensionProtocol := common_matchmake_extension.NewCommonProtocol(matchmakeExtensionProtocol)
-	commonMatchmakeExtensionProtocol.SetManager(globals.MatchmakingManager)
+	globals.MatchmakeExtensionCommonProtocol = common_matchmake_extension.NewCommonProtocol(matchmakeExtensionProtocol)
+	globals.MatchmakeExtensionCommonProtocol.SetManager(globals.MatchmakingManager)
 
-	commonMatchmakeExtensionProtocol.CleanupSearchMatchmakeSession = nex_matchmake_extension_common.CleanupSearchMatchmakeSession
-	commonMatchmakeExtensionProtocol.OnAfterAutoMatchmakeWithSearchCriteriaPostpone = func(packet nex.PacketInterface, lstSearchCriteria types.List[mm_types.MatchmakeSessionSearchCriteria], anyGathering mm_types.GatheringHolder, strMessage types.String) {
+	globals.MatchmakeExtensionCommonProtocol.CleanupSearchMatchmakeSession = nex_matchmake_extension_common.CleanupSearchMatchmakeSession
+	globals.MatchmakeExtensionCommonProtocol.OnAfterAutoMatchmakeWithSearchCriteriaPostpone = func(packet nex.PacketInterface, lstSearchCriteria types.List[mm_types.MatchmakeSessionSearchCriteria], anyGathering mm_types.GatheringHolder, strMessage types.String) {
 		fmt.Println(anyGathering)
 	}
 }

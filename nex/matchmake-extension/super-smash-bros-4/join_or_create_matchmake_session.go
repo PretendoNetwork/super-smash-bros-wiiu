@@ -7,7 +7,8 @@ import (
 	"github.com/PretendoNetwork/nex-go/v2"
 	nex_types "github.com/PretendoNetwork/nex-go/v2/types"
 
-	//mmdatabase "github.com/PretendoNetwork/nex-protocols-common-go/v2/matchmake-extension/database"
+	//mmdatabase "github.com/PretendoNetwork/nex-protocols-common-go/v2/matchmake-extension/database"\
+	mm_types "github.com/PretendoNetwork/nex-protocols-go/v2/match-making/types"
 	matchmake_extension_super_smash_bros_4 "github.com/PretendoNetwork/nex-protocols-go/v2/matchmake-extension/super-smash-bros-4"
 	"github.com/PretendoNetwork/super-smash-bros-wiiu/globals"
 )
@@ -26,7 +27,7 @@ func JoinOrCreateMatchmakeSession(err error, packet nex.PacketInterface, callID 
 	fmt.Println(hex.EncodeToString(packet.RMCMessage().Parameters))
 
 	// boilerplate (needs to go in protocols common)
-	endpoint := packet.Sender().Endpoint().(*nex.PRUDPEndPoint)
+	endpoint := packet.Sender().Endpoint()
 	parametersStream := nex.NewByteStreamIn(packet.RMCMessage().Parameters, endpoint.LibraryVersions(), endpoint.ByteStreamSettings())
 
 	tournamentId := nex_types.NewUInt32(0)
@@ -35,7 +36,7 @@ func JoinOrCreateMatchmakeSession(err error, packet nex.PacketInterface, callID 
 	unk2 := nex_types.NewUInt32(0)
 	unk2.ExtractFrom(parametersStream)
 
-	anyGathering := nex_types.NewAnyDataHolder()
+	anyGathering := mm_types.NewGatheringHolder()
 	anyGathering.ExtractFrom(parametersStream)
 
 	message := nex_types.NewString("")
@@ -44,13 +45,13 @@ func JoinOrCreateMatchmakeSession(err error, packet nex.PacketInterface, callID 
 	// not boilerplate
 	fmt.Println(anyGathering.FormatToString(0))
 
-	globals.MatchmakingManager.Mutex.Lock()
+	//globals.MatchmakingManager.Mutex.Lock()
 
-	// TODO: somebody please fix this i hate this code this is terrible do NOT let this make it to production
-	// matchmakeSession, _, nexError := mmdatabase.GetMatchmakeSessionByID(globals.MatchmakingManager, endpoint, tournamentId.Value)
-	// if nexError.ResultCode == nex.ResultCodes.RendezVous.SessionVoid {
+	// Check if there is a matchmakesession for the tournament competition
 
-	// }
+	// If there is, join it
+
+	// Otherwise, make a session under the tournament competition and join that
 
 	//resultMatchmakeSession := match_making_types.NewMatchmakeSession()
 

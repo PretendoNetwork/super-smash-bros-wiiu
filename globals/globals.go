@@ -3,9 +3,10 @@ package globals
 import (
 	"database/sql"
 
-	pb "github.com/PretendoNetwork/grpc-go/account"
+	pb "github.com/PretendoNetwork/grpc/go/account"
 	"github.com/PretendoNetwork/nex-go/v2"
 	common_globals "github.com/PretendoNetwork/nex-protocols-common-go/v2/globals"
+	mmextension "github.com/PretendoNetwork/nex-protocols-common-go/v2/matchmake-extension"
 	"github.com/PretendoNetwork/plogger-go"
 	"github.com/minio/minio-go/v7"
 	"google.golang.org/grpc"
@@ -29,4 +30,5 @@ var S3Url string
 var MinIOClient *minio.Client
 var Presigner *S3Presigner
 var Postgres *sql.DB
+var MatchmakeExtensionCommonProtocol *mmextension.CommonProtocol
 var MatchmakingManager *common_globals.MatchmakingManager

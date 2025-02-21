@@ -5,10 +5,10 @@ import (
 	"fmt"
 
 	"github.com/PretendoNetwork/nex-go/v2"
-	nex_types "github.com/PretendoNetwork/nex-go/v2/types"
+	"github.com/PretendoNetwork/nex-go/v2/types"
 	matchmake_extension_super_smash_bros_4 "github.com/PretendoNetwork/nex-protocols-go/v2/matchmake-extension/super-smash-bros-4"
 	"github.com/PretendoNetwork/super-smash-bros-wiiu/globals"
-	matchmake_extension_super_smash_bros_4_types "github.com/PretendoNetwork/super-smash-bros-wiiu/nex/matchmake-extension/super-smash-bros-4/types"
+	matchmake_extension_super_smash_bros_4_database "github.com/PretendoNetwork/super-smash-bros-wiiu/nex/matchmake-extension/super-smash-bros-4/database"
 )
 
 /*
@@ -26,13 +26,18 @@ func SelectCommunityCompetitionByOwner(err error, packet nex.PacketInterface, ca
 
 	fmt.Println(hex.EncodeToString(packet.RMCMessage().Parameters))
 
-	c := matchmake_extension_super_smash_bros_4_types.NewCommunityCompetition()
-	c.SetDebugFields(packet)
+	endpoint := packet.Sender().Endpoint()
+	parametersStream := nex.NewByteStreamIn(packet.RMCMessage().Parameters, endpoint.LibraryVersions(), endpoint.ByteStreamSettings())
 
-	//write to struct
-	emptyList := nex_types.NewList[*matchmake_extension_super_smash_bros_4_types.CommunityCompetition]()
-	emptyList.Append(c)
-	emptyList.WriteTo(rmcResponseStream)
+	owners := types.NewList[types.PID]()
+	owners.ExtractFrom(parametersStream)
+
+	unk := types.NewBool(false)
+	unk.ExtractFrom(parametersStream)
+
+	communityCompetitions := matchmake_extension_super_smash_bros_4_database.FindCommunityCompetitionsByOwner(owners, unk)
+
+	communityCompetitions.WriteTo(rmcResponseStream)
 
 	rmcResponse := nex.NewRMCSuccess(globals.SecureEndpoint, rmcResponseStream.Bytes())
 	rmcResponse.ProtocolID = matchmake_extension_super_smash_bros_4.ProtocolID

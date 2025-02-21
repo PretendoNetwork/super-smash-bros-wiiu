@@ -14,7 +14,7 @@ func main() {
 	// TODO - Add gRPC server
 	go nex.StartAuthenticationServer()
 	go nex.StartSecureServer()
-	go nex.StartHPPServer()
+	//go nex.StartHPPServer()
 
 	wg.Wait()
 }
