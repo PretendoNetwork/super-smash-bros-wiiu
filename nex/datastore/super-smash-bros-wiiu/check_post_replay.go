@@ -10,11 +10,11 @@ import (
 	"github.com/PretendoNetwork/super-smash-bros-wiiu/globals"
 )
 
-func CheckPostReplay(err error, packet nex.PacketInterface, callID uint32, param *datastore_super_smash_bros_4_protocol_types.DataStorePreparePostReplayParam) (*nex.RMCMessage, *nex.Error) {
+func CheckPostReplay(err error, packet nex.PacketInterface, callID uint32, param datastore_super_smash_bros_4_protocol_types.DataStorePreparePostReplayParam) (*nex.RMCMessage, *nex.Error) {
 	fmt.Printf("Post Param: %s\n", param.String())
 
-	pIsRequired := types.NewPrimitiveBool(true)
-	pIsRare := types.NewPrimitiveBool(false) /// no idea what this is lmao
+	pIsRequired := types.NewBool(true)
+	pIsRare := types.NewBool(false) /// no idea what this is lmao
 
 	rmcResponseStream := nex.NewByteStreamOut(globals.SecureServer.LibraryVersions, globals.SecureServer.ByteStreamSettings)
 

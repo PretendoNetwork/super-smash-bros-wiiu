@@ -12,19 +12,22 @@ import (
 	"github.com/PretendoNetwork/super-smash-bros-wiiu/globals"
 )
 
-var ServerReplaysTemp []*datastore_super_smash_bros_4_protocol_types.DataStoreReplayMetaInfo
+var ServerReplaysTemp []datastore_super_smash_bros_4_protocol_types.DataStoreReplayMetaInfo
 
-func PreparePostReplay(err error, packet nex.PacketInterface, callID uint32, param *datastore_super_smash_bros_4_protocol_types.DataStorePreparePostReplayParam) (*nex.RMCMessage, *nex.Error) {
+func PreparePostReplay(err error, packet nex.PacketInterface, callID uint32, param datastore_super_smash_bros_4_protocol_types.DataStorePreparePostReplayParam) (*nex.RMCMessage, *nex.Error) {
 	//fmt.Printf("Post Param: %s\n", param.String())
+	if err != nil {
+		return nil, nex.NewError(nex.ResultCodes.Core.Unknown, err.Error())
+	}
 
 	if ServerReplaysTemp == nil {
-		ServerReplaysTemp = make([]*datastore_super_smash_bros_4_protocol_types.DataStoreReplayMetaInfo, 0)
+		ServerReplaysTemp = make([]datastore_super_smash_bros_4_protocol_types.DataStoreReplayMetaInfo, 0)
 	}
 
 	replay := datastore_super_smash_bros_4_protocol_types.NewDataStoreReplayMetaInfo()
 	replay.Mode = param.Mode
 	replay.Players = param.Players
-	replay.ReplayID = types.NewPrimitiveU64(uint64(len(ServerReplaysTemp)))
+	replay.ReplayID = types.NewUInt64(uint64(len(ServerReplaysTemp)))
 	replay.ReplayType = param.ReplayType
 	replay.Rule = param.Rule
 	replay.Size = param.Size
@@ -39,7 +42,7 @@ func PreparePostReplay(err error, packet nex.PacketInterface, callID uint32, par
 		return nil, nex.NewError(nex.ResultCodes.Core.NotImplemented, "change_error")
 	}
 
-	dataId := replay.ReplayID.Value
+	dataId := uint64(replay.ReplayID)
 	key := fmt.Sprintf("replay_%d.bin", dataId)
 	URL, formData, err := globals.Presigner.PostObject(globals.S3Bucket, key, time.Minute*15)
 	if err != nil {
@@ -49,23 +52,23 @@ func PreparePostReplay(err error, packet nex.PacketInterface, callID uint32, par
 	pPreparePostParam := datastore_types.NewDataStorePreparePostParam()
 
 	pReqPostInfo := datastore_types.NewDataStoreReqPostInfo()
-	pReqPostInfo.DataID = types.NewPrimitiveU64(dataId)
+	pReqPostInfo.DataID = types.NewUInt64(dataId)
 	pReqPostInfo.URL = types.NewString(URL.String())
-	pReqPostInfo.RequestHeaders = types.NewList[*datastore_types.DataStoreKeyValue]()
-	pReqPostInfo.FormFields = types.NewList[*datastore_types.DataStoreKeyValue]()
+	pReqPostInfo.RequestHeaders = types.NewList[datastore_types.DataStoreKeyValue]()
+	pReqPostInfo.FormFields = types.NewList[datastore_types.DataStoreKeyValue]()
 	pReqPostInfo.RootCACert = types.NewBuffer([]byte{})
 
-	pReqPostInfo.RequestHeaders.Type = datastore_types.NewDataStoreKeyValue()
-	pReqPostInfo.RequestHeaders.SetFromData([]*datastore_types.DataStoreKeyValue{})
+	//pReqPostInfo.RequestHeaders.Type = datastore_types.NewDataStoreKeyValue()
+	pReqPostInfo.RequestHeaders = types.NewList[datastore_types.DataStoreKeyValue]()
 
-	pReqPostInfo.FormFields.Type = datastore_types.NewDataStoreKeyValue()
+	//pReqPostInfo.FormFields.Type = datastore_types.NewDataStoreKeyValue()
 
 	for key, value := range formData {
 		field := datastore_types.NewDataStoreKeyValue()
 		field.Key = types.NewString(key)
 		field.Value = types.NewString(value)
 
-		pReqPostInfo.FormFields.Append(field)
+		pReqPostInfo.FormFields = append(pReqPostInfo.FormFields, field)
 	}
 
 	rmcResponseStream := nex.NewByteStreamOut(globals.SecureServer.LibraryVersions, globals.SecureServer.ByteStreamSettings)

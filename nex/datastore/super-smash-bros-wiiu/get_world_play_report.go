@@ -8,7 +8,7 @@ import (
 )
 
 func GetWorldPlayReport(err error, packet nex.PacketInterface, callID uint32) (*nex.RMCMessage, *nex.Error) {
-	config := types.NewList[*types.PrimitiveS64]()
+	config := types.NewList[types.Int64]()
 
 	rmcResponseStream := nex.NewByteStreamOut(globals.SecureServer.LibraryVersions, globals.SecureServer.ByteStreamSettings)
 
