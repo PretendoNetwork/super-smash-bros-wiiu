@@ -16,6 +16,9 @@ var ServerReplaysTemp []datastore_super_smash_bros_4_protocol_types.DataStoreRep
 
 func PreparePostReplay(err error, packet nex.PacketInterface, callID uint32, param datastore_super_smash_bros_4_protocol_types.DataStorePreparePostReplayParam) (*nex.RMCMessage, *nex.Error) {
 	//fmt.Printf("Post Param: %s\n", param.String())
+	if err != nil {
+		return nil, nex.NewError(nex.ResultCodes.Core.Unknown, err.Error())
+	}
 
 	if ServerReplaysTemp == nil {
 		ServerReplaysTemp = make([]datastore_super_smash_bros_4_protocol_types.DataStoreReplayMetaInfo, 0)

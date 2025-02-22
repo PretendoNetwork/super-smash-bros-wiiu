@@ -18,7 +18,7 @@ func GetApplicationConfig(err error, packet nex.PacketInterface, callID uint32, 
 	config = append(config, types.NewString("0"))       // 0
 	config = append(config, types.NewString("0"))       // 0
 	config = append(config, types.NewString("1"))       // 1
-	config = append(config, types.NewString("2"))       // 1   ENABLE TOURNAMENTS WITH 2
+	config = append(config, types.NewString("1"))       // 1   ENABLE TOURNAMENTS WITH 2
 	config = append(config, types.NewString("0"))       // 0
 	config = append(config, types.NewString("30"))      // 30
 	config = append(config, types.NewString("50"))
