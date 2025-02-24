@@ -64,4 +64,5 @@ func registerCommonSecureServerProtocols() {
 	globals.MatchmakeExtensionCommonProtocol.OnAfterAutoMatchmakeWithSearchCriteriaPostpone = func(packet nex.PacketInterface, lstSearchCriteria types.List[mm_types.MatchmakeSessionSearchCriteria], anyGathering mm_types.GatheringHolder, strMessage types.String) {
 		fmt.Println(anyGathering)
 	}
+	globals.MatchmakeExtensionCommonProtocol.CleanupMatchmakeSessionSearchCriterias = func(searchCriterias types.List[mm_types.MatchmakeSessionSearchCriteria]) {}
 }
