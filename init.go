@@ -3,6 +3,7 @@ package main
 import (
 	"crypto/rand"
 	"database/sql"
+	"encoding/hex"
 	"fmt"
 	"os"
 	"strconv"
@@ -45,6 +46,8 @@ func init() {
 	friendsGRPCHost := os.Getenv("PN_SSBWIIU_FRIENDS_GRPC_HOST")
 	friendsGRPCPort := os.Getenv("PN_SSBWIIU_FRIENDS_GRPC_PORT")
 	friendsGRPCAPIKey := os.Getenv("PN_SSBWIIU_FRIENDS_GRPC_API_KEY")
+	tokenAesKey := os.Getenv("PN_SSBWIIU_AES_KEY")
+	localAuthMode := os.Getenv("PN_SSBWIIU_LOCAL_AUTH")
 
 	kerberosPassword := make([]byte, 0x10)
 	_, err = rand.Read(kerberosPassword)
@@ -55,8 +58,8 @@ func init() {
 
 	globals.KerberosPassword = string(kerberosPassword)
 
-	globals.AuthenticationServerAccount = nex.NewAccount(types.NewPID(1), "Quazal Authentication", globals.KerberosPassword)
-	globals.SecureServerAccount = nex.NewAccount(types.NewPID(2), "Quazal Rendez-Vous", globals.KerberosPassword)
+	globals.AuthenticationServerAccount = nex.NewAccount(types.NewPID(1), "Quazal Authentication", globals.KerberosPassword, false)
+	globals.SecureServerAccount = nex.NewAccount(types.NewPID(2), "Quazal Rendez-Vous", globals.KerberosPassword, false)
 
 	if strings.TrimSpace(authenticationServerPort) == "" {
 		globals.Logger.Error("PN_SSBWIIU_AUTHENTICATION_SERVER_PORT environment variable not set")
@@ -192,4 +195,21 @@ func init() {
 
 	globals.MinIOClient = minIOClient
 	globals.Presigner = globals.NewS3Presigner(globals.MinIOClient)
+
+	if strings.TrimSpace(tokenAesKey) == "" {
+		globals.Logger.Error("PN_SSBWIIU_AES_KEY not set!")
+		os.Exit(0)
+	}
+
+	globals.TokenAESKey, err = hex.DecodeString(tokenAesKey)
+	if err != nil {
+		globals.Logger.Errorf("Failed to decode AES key: %v", err)
+		os.Exit(0)
+	}
+
+	globals.LocalAuthMode = localAuthMode == "1"
+	if globals.LocalAuthMode {
+		globals.Logger.Warning("Local authentication mode is enabled. Token validation will be skipped!")
+		globals.Logger.Warning("This is insecure and could allow ban bypasses!")
+	}
 }

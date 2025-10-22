@@ -5,7 +5,7 @@ import (
 	"os"
 	"strconv"
 
-	nex "github.com/PretendoNetwork/nex-go/v2"
+	"github.com/PretendoNetwork/nex-go/v2"
 	common_globals "github.com/PretendoNetwork/nex-protocols-common-go/v2/globals"
 	"github.com/PretendoNetwork/super-smash-bros-wiiu/globals"
 )
@@ -25,21 +25,17 @@ func StartSecureServer() {
 	globals.SecureServer.LibraryVersions.SetDefault(nex.NewLibraryVersion(3, 6, 0))
 	globals.SecureServer.AccessKey = "2869ba38"
 
-	globals.SecureEndpoint.OnConnectionEnded(func(connection *nex.PRUDPConnection) {
-		fmt.Printf("Kicked: %d\n", uint32(connection.PID()))
-	})
-
-	globals.SecureEndpoint.OnDisconnect(func(packet nex.PacketInterface) {
-		fmt.Printf("Left: %d\n", uint32(packet.Sender().PID()))
-	})
-
 	globals.SecureEndpoint.OnData(func(packet nex.PacketInterface) {
 		request := packet.RMCMessage()
 
 		fmt.Println("=== SSBWIIU - Secure ===")
 		fmt.Printf("Protocol ID: %d\n", request.ProtocolID)
 		fmt.Printf("Method ID: %d\n", request.MethodID)
-		fmt.Println("====================")
+		fmt.Println("========================")
+	})
+
+	globals.SecureEndpoint.OnError(func(err *nex.Error) {
+		globals.Logger.Errorf("Secure: %v", err)
 	})
 
 	globals.MatchmakingManager = common_globals.NewMatchmakingManager(globals.SecureEndpoint, globals.Postgres)
