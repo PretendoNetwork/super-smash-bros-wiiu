@@ -42,6 +42,10 @@ func StartSecureServer() {
 		fmt.Println("====================")
 	})
 
+	globals.SecureEndpoint.OnError(func(err *nex.Error) {
+		globals.Logger.Errorf("Secure: %v", err)
+	})
+
 	globals.MatchmakingManager = common_globals.NewMatchmakingManager(globals.SecureEndpoint, globals.Postgres)
 	globals.MatchmakingManager.GetUserFriendPIDs = globals.GetUserFriendPids
 
