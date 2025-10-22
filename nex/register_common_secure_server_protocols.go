@@ -1,9 +1,6 @@
 package nex
 
 import (
-	"fmt"
-
-	nex "github.com/PretendoNetwork/nex-go/v2"
 	"github.com/PretendoNetwork/nex-go/v2/types"
 	common_match_making "github.com/PretendoNetwork/nex-protocols-common-go/v2/match-making"
 	common_match_making_ext "github.com/PretendoNetwork/nex-protocols-common-go/v2/match-making-ext"
@@ -12,16 +9,12 @@ import (
 	common_secure "github.com/PretendoNetwork/nex-protocols-common-go/v2/secure-connection"
 	match_making "github.com/PretendoNetwork/nex-protocols-go/v2/match-making"
 	match_making_ext "github.com/PretendoNetwork/nex-protocols-go/v2/match-making-ext"
-	mm_types "github.com/PretendoNetwork/nex-protocols-go/v2/match-making/types"
 	matchmake_extension_super_smash_bros_4 "github.com/PretendoNetwork/nex-protocols-go/v2/matchmake-extension/super-smash-bros-4"
 	nat_traversal "github.com/PretendoNetwork/nex-protocols-go/v2/nat-traversal"
 	secure "github.com/PretendoNetwork/nex-protocols-go/v2/secure-connection"
 	"github.com/PretendoNetwork/super-smash-bros-wiiu/globals"
-
 	//local_matchmake_extension_super_smash_bros_4 "github.com/PretendoNetwork/super-smash-bros-wiiu/nex/matchmake-extension/super-smash-bros-4"
 	//local_matchmake_extension_database_super_smash_bros_4 "github.com/PretendoNetwork/super-smash-bros-wiiu/nex/matchmake-extension/super-smash-bros-4/database"
-
-	nex_matchmake_extension_common "github.com/PretendoNetwork/super-smash-bros-wiiu/nex/matchmake-extension/common"
 )
 
 func registerCommonSecureServerProtocols() {
@@ -61,9 +54,16 @@ func registerCommonSecureServerProtocols() {
 	globals.MatchmakeExtensionCommonProtocol = common_matchmake_extension.NewCommonProtocol(matchmakeExtensionProtocol)
 	globals.MatchmakeExtensionCommonProtocol.SetManager(globals.MatchmakingManager)
 
-	globals.MatchmakeExtensionCommonProtocol.CleanupSearchMatchmakeSession = nex_matchmake_extension_common.CleanupSearchMatchmakeSession
-	globals.MatchmakeExtensionCommonProtocol.OnAfterAutoMatchmakeWithSearchCriteriaPostpone = func(packet nex.PacketInterface, lstSearchCriteria types.List[mm_types.MatchmakeSessionSearchCriteria], anyGathering mm_types.GatheringHolder, strMessage types.String) {
-		fmt.Println(anyGathering)
-	}
-	globals.MatchmakeExtensionCommonProtocol.CleanupMatchmakeSessionSearchCriterias = func(searchCriterias types.List[mm_types.MatchmakeSessionSearchCriteria]) {}
+	//globals.MatchmakeExtensionCommonProtocol.CleanupSearchMatchmakeSession = func(matchmakeSession *mm_types.MatchmakeSession) {
+	//	globals.Logger.Infof("%v", matchmakeSession.FormatToString(1))
+	//}
+	//globals.MatchmakeExtensionCommonProtocol.OnAfterAutoMatchmakeWithSearchCriteriaPostpone = func(packet nex.PacketInterface, lstSearchCriteria types.List[mm_types.MatchmakeSessionSearchCriteria], anyGathering mm_types.GatheringHolder, strMessage types.String) {
+	//	globals.Logger.Infof("=== OnAfter for pid %v ===", packet.Sender().PID())
+	//	for _, criteria := range lstSearchCriteria {
+	//		globals.Logger.Infof("%v", criteria.FormatToString(1))
+	//	}
+	//	globals.Logger.Infof("%v", anyGathering.FormatToString(1))
+	//	globals.Logger.Infof(" %v", strMessage)
+	//}
+	//globals.MatchmakeExtensionCommonProtocol.CleanupMatchmakeSessionSearchCriterias = func(searchCriterias types.List[mm_types.MatchmakeSessionSearchCriteria]) {}
 }

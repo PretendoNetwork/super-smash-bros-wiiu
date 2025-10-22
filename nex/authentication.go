@@ -5,7 +5,7 @@ import (
 	"os"
 	"strconv"
 
-	nex "github.com/PretendoNetwork/nex-go/v2"
+	"github.com/PretendoNetwork/nex-go/v2"
 	"github.com/PretendoNetwork/super-smash-bros-wiiu/globals"
 )
 
@@ -32,12 +32,15 @@ func StartAuthenticationServer() {
 		fmt.Println("=== SSBWIIU - Auth ===")
 		fmt.Printf("Protocol ID: %d\n", request.ProtocolID)
 		fmt.Printf("Method ID: %d\n", request.MethodID)
-		fmt.Println("==================")
+		fmt.Println("======================")
+	})
+
+	globals.AuthenticationEndpoint.OnError(func(err *nex.Error) {
+		globals.Logger.Errorf("Auth: %v", err)
 	})
 
 	registerCommonAuthenticationServerProtocols()
 
 	port, _ := strconv.Atoi(os.Getenv("PN_SSBWIIU_AUTHENTICATION_SERVER_PORT"))
-
 	globals.AuthenticationServer.Listen(port)
 }
