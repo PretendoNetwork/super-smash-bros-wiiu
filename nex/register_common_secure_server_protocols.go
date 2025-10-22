@@ -27,8 +27,9 @@ import (
 func registerCommonSecureServerProtocols() {
 	secureProtocol := secure.NewProtocol()
 	globals.SecureEndpoint.RegisterServiceProtocol(secureProtocol)
-	secure := common_secure.NewCommonProtocol(secureProtocol)
-	secure.CreateReportDBRecord = func(pid types.PID, reportID types.UInt32, reportData types.QBuffer) error {
+	commonSecureProtocol := common_secure.NewCommonProtocol(secureProtocol)
+	commonSecureProtocol.EnableInsecureRegister()
+	commonSecureProtocol.CreateReportDBRecord = func(pid types.PID, reportID types.UInt32, reportData types.QBuffer) error {
 		return nil
 	}
 

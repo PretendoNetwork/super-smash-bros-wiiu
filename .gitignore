@@ -18,6 +18,7 @@ go.work
 go.work.sum
 sqldatabase
 .idea
+settings.json
 
 # built server
 build

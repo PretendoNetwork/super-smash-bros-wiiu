@@ -20,6 +20,10 @@ func AccountDetailsByPID(pid types.PID) (*nex.Account, *nex.Error) {
 	}
 
 	password, errorCode := PasswordFromPID(pid)
+	if errorCode != 0 && LocalAuthMode {
+		Logger.Errorf("Password err: %v", errorCode)
+		password, errorCode = PasswordFromPIDLocal(pid)
+	}
 	if errorCode != 0 {
 		return nil, nex.NewError(errorCode, "Failed to get password from PID")
 	}
@@ -40,13 +44,19 @@ func AccountDetailsByUsername(username string) (*nex.Account, *nex.Error) {
 
 	pidInt, err := strconv.Atoi(username)
 	if err != nil {
+		Logger.Error(err.Error())
 		return nil, nex.NewError(nex.ResultCodes.RendezVous.InvalidUsername, "Invalid username")
 	}
 
 	pid := types.NewPID(uint64(pidInt))
 
 	password, errorCode := PasswordFromPID(pid)
+	if errorCode != 0 && LocalAuthMode {
+		Logger.Errorf("Password err: %v", errorCode)
+		password, errorCode = PasswordFromPIDLocal(pid)
+	}
 	if errorCode != 0 {
+		Logger.Errorf("Password err: %v", errorCode)
 		return nil, nex.NewError(errorCode, "Failed to get password from PID")
 	}
 
