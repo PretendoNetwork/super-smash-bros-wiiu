@@ -3,16 +3,15 @@ package main
 import (
 	"crypto/rand"
 	"database/sql"
-	"encoding/hex"
 	"fmt"
 	"os"
 	"strconv"
 	"strings"
 
-	pb_account "github.com/PretendoNetwork/grpc/go/account"
 	pb_friends "github.com/PretendoNetwork/grpc/go/friends"
 	"github.com/PretendoNetwork/nex-go/v2"
 	"github.com/PretendoNetwork/nex-go/v2/types"
+	common_globals "github.com/PretendoNetwork/nex-protocols-common-go/v2/globals"
 	"github.com/PretendoNetwork/plogger-go"
 	"github.com/PretendoNetwork/super-smash-bros-wiiu/globals"
 	"github.com/joho/godotenv"
@@ -46,7 +45,6 @@ func init() {
 	friendsGRPCHost := os.Getenv("PN_SSBWIIU_FRIENDS_GRPC_HOST")
 	friendsGRPCPort := os.Getenv("PN_SSBWIIU_FRIENDS_GRPC_PORT")
 	friendsGRPCAPIKey := os.Getenv("PN_SSBWIIU_FRIENDS_GRPC_API_KEY")
-	tokenAesKey := os.Getenv("PN_SSBWIIU_AES_KEY")
 	localAuthMode := os.Getenv("PN_SSBWIIU_LOCAL_AUTH")
 
 	kerberosPassword := make([]byte, 0x10)
@@ -102,10 +100,11 @@ func init() {
 		os.Exit(0)
 	}
 
-	if port, err := strconv.Atoi(accountGRPCPort); err != nil {
+	accountPort, err := strconv.Atoi(accountGRPCPort)
+	if err != nil {
 		globals.Logger.Errorf("PN_SSBWIIU_ACCOUNT_GRPC_PORT is not a valid port. Expected 0-65535, got %s", accountGRPCPort)
 		os.Exit(0)
-	} else if port < 0 || port > 65535 {
+	} else if accountPort < 0 || accountPort > 65535 {
 		globals.Logger.Errorf("PN_SSBWIIU_ACCOUNT_GRPC_PORT is not a valid port. Expected 0-65535, got %s", accountGRPCPort)
 		os.Exit(0)
 	}
@@ -156,16 +155,7 @@ func init() {
 		os.Exit(0)
 	}
 
-	globals.GRPCAccountClientConnection, err = grpc.NewClient(fmt.Sprintf("%s:%s", accountGRPCHost, accountGRPCPort), grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err != nil {
-		globals.Logger.Criticalf("Failed to connect to account gRPC server: %v", err)
-		os.Exit(0)
-	}
-
-	globals.GRPCAccountClient = pb_account.NewAccountClient(globals.GRPCAccountClientConnection)
-	globals.GRPCAccountCommonMetadata = metadata.Pairs(
-		"X-API-Key", accountGRPCAPIKey,
-	)
+	common_globals.ConnectToAccountGRPC(accountGRPCHost, uint16(accountPort), accountGRPCAPIKey)
 
 	globals.GRPCFriendsClientConnection, err = grpc.Dial(fmt.Sprintf("%s:%s", friendsGRPCHost, friendsGRPCPort), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
@@ -195,17 +185,6 @@ func init() {
 
 	globals.MinIOClient = minIOClient
 	globals.Presigner = globals.NewS3Presigner(globals.MinIOClient)
-
-	if strings.TrimSpace(tokenAesKey) == "" {
-		globals.Logger.Error("PN_SSBWIIU_AES_KEY not set!")
-		os.Exit(0)
-	}
-
-	globals.TokenAESKey, err = hex.DecodeString(tokenAesKey)
-	if err != nil {
-		globals.Logger.Errorf("Failed to decode AES key: %v", err)
-		os.Exit(0)
-	}
 
 	globals.LocalAuthMode = localAuthMode == "1"
 	if globals.LocalAuthMode {

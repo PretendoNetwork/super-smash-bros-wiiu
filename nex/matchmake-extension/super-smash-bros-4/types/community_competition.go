@@ -283,10 +283,10 @@ func (cc *CommunityCompetition) SetDebugFields(packet nex.PacketInterface) {
 	cc.Gathering.HostPID = types.NewPID(1446831925)
 	cc.Gathering.MinimumParticipants = types.NewUInt16(2)
 	cc.Gathering.MaximumParticipants = types.NewUInt16(30)
-	cc.Gathering.ParticipationPolicy = types.NewUInt32(95)
-	cc.Gathering.PolicyArgument = types.NewUInt32(0)
-	cc.Gathering.Flags = types.NewUInt32(641)
-	cc.Gathering.State = types.NewUInt32(0)
+	cc.Gathering.ParticipationPolicy = 95
+	cc.Gathering.PolicyArgument = 0
+	cc.Gathering.Flags = 641
+	cc.Gathering.State = 0
 	cc.Gathering.Description = types.NewString("test5")
 
 	s := "0033d01000010000ff01000a02000000ffffffffffffffffffffffffbfbffbfe00ffab7f0000000000000000bfbffbfe00ffab7f000000000000000000000000010607000a000000000000000000000000000000000000007e914214000060010102010000000000"
