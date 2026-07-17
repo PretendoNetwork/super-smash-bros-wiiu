@@ -38,6 +38,6 @@ func registerCommonAuthenticationServerProtocols() {
 			return nil
 		}
 	} else {
-		commonTicketGrantingProtocol.SetPretendoValidation(globals.TokenAESKey)
+		commonTicketGrantingProtocol.ConfigurePNValidation([]string{"10110E00"})
 	}
 }

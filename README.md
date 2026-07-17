@@ -56,5 +56,4 @@ All configuration options are handled via environment variables
 | `PN_SSBWIIU_FRIENDS_GRPC_HOST`          | Host name for your friends server gRPC service                                                                         | Yes                                 |
 | `PN_SSBWIIU_FRIENDS_GRPC_PORT`          | Port for your friends server gRPC service                                                                              | Yes                                 |
 | `PN_SSBWIIU_FRIENDS_GRPC_API_KEY`       | API key for your friends server gRPC service                                                                           | No (Assumed to be an open gRPC API) |
-| `PN_SSBWIIU_AES_KEY`                    | AES key for token decryption                                                                                           | Yes (unless local auth used)        |
 | `PN_SSBWIIU_LOCAL_AUTH`                 | Whether to read NEX keys from a local settings.json file (insecure!)                                                   | No (Assumed false)                  |
