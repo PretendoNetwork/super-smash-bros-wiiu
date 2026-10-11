@@ -12,16 +12,21 @@
 *.out
 
 # custom
-.env
-*.key
-go.work
-go.work.sum
-sqldatabase
+.vscode
 .idea
-settings.json
+.env
+build
+log
+*.pem
+*.key
+*.pcap
+*.pcapng
 
 # built server
 build
 
 # logs
 log
+
+# macOS nonsense
+.DS_Store
