@@ -15,7 +15,7 @@ $ cd super-smash-bros-wiiu
 To compile using Go, `go get` the required modules and then `go build` to your desired location. You may also want to tidy the go modules, though this is optional
 
 ```bash
-$ go get -u
+$ go get
 $ go mod tidy
 $ go build -o build/super-smash-bros-wiiu
 ```
@@ -57,3 +57,4 @@ All configuration options are handled via environment variables
 | `PN_SSBWIIU_FRIENDS_GRPC_PORT`          | Port for your friends server gRPC service                                                                              | Yes                                 |
 | `PN_SSBWIIU_FRIENDS_GRPC_API_KEY`       | API key for your friends server gRPC service                                                                           | No (Assumed to be an open gRPC API) |
 | `PN_SSBWIIU_LOCAL_AUTH`                 | Whether to read NEX keys from a local settings.json file (insecure!)                                                   | No (Assumed false)                  |
+| `PN_SSBWIIU_HEALTH_CHECK_PORT`          | Port for the UDP health check                                                                                       | No
